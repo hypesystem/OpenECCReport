@@ -1,0 +1,17 @@
+\subsection{Finite Fields}
+
+An integral part of Elliptic Curve (and much other) cryptography is finite fields and arithmetic
+over finite fields. Per default no such functionality exists in C\#.
+
+BouncyCastle contains, among other things, an implementation of finite fields. In order to quickly
+build the naïve version of OpenECC, this was used in the first version.
+
+Integrating *just* the Org.BouncyCastle.Math.EC.FpFieldElement (finite field implementation) into
+the project is not trivial, however, as it uses a BigInteger implementation defined in BouncyCastle,
+which differs from that in C\#'s System.Numerics.BigInteger.
+
+To solve these issues, a wrapper (FiniteFieldElement) was created. This wrapper maps from BouncyCastle's
+BigIntegers to the normal BigIntegers, reducing the boilerplate between BouncyCastle and OpenECC to
+just one class.
+
+The primary problem here is converting between the two BigInteger implementations. This is done by ...?
