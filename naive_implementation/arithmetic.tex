@@ -29,15 +29,15 @@ Actual addition (Guide to elliptic curve crypto... p. 80)
 
 Implementation
 \begin{verbatim}
-    public override Point Add(Point q)
-    {
-        //p + infinity = p
-        if (q == Infinity)
-            return this;
+	public override Point Add(Point q)
+	{
+	    //p + infinity = p
+	    if (q == Infinity)
+	        return this;
 
-        //p + -p = infinity
-        if (this == -q)
-            return Infinity;
+	    //p + -p = infinity
+	    if (this == -q)
+	        return Infinity;
 \end{verbatim}
 
 \subsubsection{Doubling}
