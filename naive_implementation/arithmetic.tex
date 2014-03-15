@@ -1,5 +1,13 @@
 \subsection{Arithmetic}
 
+Note: Illustrations of the idea here would be nice.
+
+Two points on the curve, P and Q, are added by drawing a line through P and Q. A point R\_reflection
+is found, where the line intersects the curve again. The reflection of R\_reflection, R, is found as
+the result of the addition. (Guide to Elliptic Curve Crypto... p. 79)
+
+The double of P, 2P or P+P, is found by drawing the tangent of the curve at P. R\_reflection is once again found at the line's (in this case the tangent's) next intersection with the curve, and the result R, is found by reflecting R\_reflection. (Guide to Elliptic Curve Crypto... p.79)
+
 Group law for E/K (integers in K, where K is most likely a finite field)
 y\^2 = x\^3 + ax + b, char(K) not= 2,3
 
@@ -11,14 +19,6 @@ Adding a point to infinity yields the point.
 
 \subsubsection{Addition}
 
-Note: Illustrations of the idea here would be nice.
-
-Two points on the curve, P and Q, are added by drawing a line through P and Q. A point R\_reflection
-is found, where the line intersects the curve again. The reflection of R\_reflection, R, is found as
-the result of the addition. (Guide to Elliptic Curve Crypto... p. 79)
-
-The double of P, 2P or P+P, is found by drawing the tangent of the curve at P. R\_reflection is once again found at the line's (in this case the tangent's) next intersection with the curve, and the result R, is found by reflecting R\_reflection. (Guide to Elliptic Curve Crypto... p.79)
-
 Actual addition (Guide to elliptic curve crypto... p. 80)
 \begin{quote}
 	3. Point addition. Let P = (x1,y1) in E(K) and Q = (x2,y2) in E(K), where P not= -+ Q.
@@ -27,9 +27,24 @@ Actual addition (Guide to elliptic curve crypto... p. 80)
 	x3 = ((y2-y1)/(x2-x1))\^2 - x1 - x    and    y3 = ((y2-y1)/(x2-x1))*(x1-x3)-y1
 \end{quote}
 
+Implementation
+\begin{verbatim}
+    public override Point Add(Point q)
+    {
+        //p + infinity = p
+        if (q == Infinity)
+            return this;
+
+        //p + -p = infinity
+        if (this == -q)
+            return Infinity;
+\end{verbatim}
+
 \subsubsection{Doubling}
+
 Guide... p. 80 (quote)
-
-Let P = (x1,y1) in E(K), where P not= -P. Then 2P = (x3,y3), where
-
-x3 = ((3x1\^2+a)/(2y1))\^2-2x1    and    y3 = ((3x1\^2+a)/2y1)*(x1-x3)-y1
+\begin{quote}
+	Let P = (x1,y1) in E(K), where P not= -P. Then 2P = (x3,y3), where
+	
+	x3 = ((3x1\^2+a)/(2y1))\^2-2x1    and    y3 = ((3x1\^2+a)/2y1)*(x1-x3)-y1
+\end{quote}
