@@ -2,20 +2,24 @@
 
 Note: Illustrations of the idea here would be nice.
 
-Two points on the curve, P and Q, are added by drawing a line through P and Q. A point R\_reflection
-is found, where the line intersects the curve again. The reflection of R\_reflection, R, is found as
-the result of the addition. (Guide to Elliptic Curve Crypto... p. 79)
+The addition, \(P + Q\), is done by drawing a line through the points, \(P\) and \(Q\),
+and finding the point \(R_{reflection})\), where the line intersects the curve again. This point is
+then reflected over the x-axis to find \(R\), the result. (Guide to Elliptic Curve Crypto... p. 79)
 
-The double of P, 2P or P+P, is found by drawing the tangent of the curve at P. R\_reflection is once again found at the line's (in this case the tangent's) next intersection with the curve, and the result R, is found by reflecting R\_reflection. (Guide to Elliptic Curve Crypto... p.79)
+The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
+\(R_{reflection}\) is once again found at the line's (in this case the tangent's) next intersection
+with the curve, and the result \(R\), is found by reflecting \(R_{reflection}\). (Guide to Elliptic Curve Crypto... p.79)
 
-Group law for E/K (integers in K, where K is most likely a finite field)
-y\^2 = x\^3 + ax + b, char(K) not= 2,3
+Group law for \(E/K\), integers in K, where K is a (finite) field.
+\(y^2 = x^3 + ax + b\), char(K) not= 2,3
 
-Adding a point to infinity yields the point.
+\(P + \infty = P\) (Adding a point to infinity yields the point)
 
-(x,y) + (x,-y) = infinity. If P=(x,y) then -P=(x,-y) (negative P).
+\(P=(x,y) \implies -P=(x,-y)\) (negation is done by negating y)
 
--infinity = infinity (negative infinity equals infinity).
+\(P - P = \infty\) (a point subtracted from itself yields infinity)
+
+\(-\infty = \infty\) (negative infinity equals infinity)
 
 \subsubsection{Addition}
 
@@ -42,7 +46,7 @@ Implementation
 
 \subsubsection{Doubling}
 
-Guide... p. 80 (quote)
+Used if \(Q = P\) in \(P + Q\). Guide... p. 80 (quote)
 \begin{quote}
 	Let P = (x1,y1) in E(K), where P not= -P. Then 2P = (x3,y3), where
 	
