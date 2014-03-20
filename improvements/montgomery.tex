@@ -1,0 +1,27 @@
+\subsection{Montgomery Curves}
+
+Most safe curves\foonote{According to http://safecurves.cr.yp.to/} are not of the naively suppoorted
+Weierstrass simple form, but rather of the slightly different \emph{Montgomery form}. Montgomery curves
+have the form \(y^2 = x^3 + ax^2 + x\).
+
+Montgomery curves can be translated into the Weierstrass simple form (although the reverse is not always
+possible)\footnote{http://safecurves.cr.yp.to/equation.html}, but with the cost that the Weierstrass form
+will have parameters that are huge compared to the Montgomery form. For example, the Montgomery curve,
+\verb|Curve25519| has the equation \(y^2 = x^3+486662x^2+x\)\footnote{http://safecurves.cr.yp.to/}, but
+translated into the Weierstrass simple form, it will have an equation that does not fit on a normal A4
+page:\footnote{Appendix with calculations, due to Lorena}
+
+\(y^2 = x^3 + 19298681539552699237261830834781317975544997444273427339909597334573241639236x + 55751746669818908907645289078257140818241103727901012315294400837956729358436\)
+
+Note: What is "acceptable change in parameters"? (Guide to Elliptic Curve Cryptography)
+
+Operations on this curve are much harder.
+
+In addition to smaller parameters, Montgomery curves have other inherent factors that result in quicker
+computations\footnote{source?}.
+
+These are two strong arguments (safety and performance) for supporting Montgomery curves natively (and
+not just through transformations). The question then becomes: is it feasible in the scope of this
+project to implement these curves?
+
+To be elaborated...
