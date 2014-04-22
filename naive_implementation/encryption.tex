@@ -31,6 +31,13 @@ ECIES, The Elliptic Curve Integrated Encryption Scheme, is a variant of the ElGa
 on a key derivation function, a symmetric encryption scheme, such as AES, which will be used in the naive implementation, and a
 message authentication code (MAC) algorithm, such as HMAC. (Hankerson et.al. p. 189)
 
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=90mm]{img/naive_implementation__encryption__ecies_class_diagram.png}
+	\caption{Class Diagram of structure around the ECIES encryption implementation}
+	\label{ecies_class_diagram}
+\end{figure}
+
 This adds new dependencies to the project: AES and HMAC.
 
 C\# has built-in support for Rijndael\footnote{http://msdn.microsoft.com/en-us/library/system.security.cryptography.rijndaelmanaged.aspx}
