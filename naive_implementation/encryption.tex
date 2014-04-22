@@ -27,4 +27,19 @@ A key generation algorithm takes the Domain Parameters as input and generates th
 
 \subsubsection{Public-Key Encryption}
 
-ECIES, The Elliptic Curve Integrated Encryption Scheme, is a variant of the ElGamal public-key encryption scheme. (Hankerson et.al. p. 189)
+ECIES, The Elliptic Curve Integrated Encryption Scheme, is a variant of the ElGamal public-key encryption scheme. This scheme relies
+on a key derivation function, a symmetric encryption scheme, such as AES, which will be used in the naive implementation, and a
+message authentication code (MAC) algorithm, such as HMAC. (Hankerson et.al. p. 189)
+
+This adds new dependencies to the project: AES and HMAC.
+
+C\# has built-in support for Rijndael\footnote{http://msdn.microsoft.com/en-us/library/system.security.cryptography.rijndaelmanaged.aspx}
+(AES), and trusting this implementation is assumed safe for the scope of this project. Again, the importance of the naive implementation
+is to show a full, working stack with naive implementations of the basics of Elliptic Curves (but not other basic constructs).
+
+It is possible to set a specific key in \verb+RijndaelManaged+, so what is now needed is the key derivation function, which will have to
+be constructed for the purpose.
+
+--- key deriv func ---
+
+HMAC is supported in C\# as well\footnote{http://msdn.microsoft.com/en-us/library/system.security.cryptography.hmac.aspx}.
