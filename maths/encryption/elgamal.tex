@@ -10,7 +10,7 @@ key \(h_B = g^{x_B}\). The public key is distributed to the sender. Given a mess
 sender can now construct a ciphertext \(c\) from a randomly selected \(k\):
 
 \begin{equation}
-	c = (c_1, c_2) \verb+     where  +  c_1 = g^k  \verb+ and +  c_2 = m * h_B^k
+	c = (c_1, c_2)  \text{     where  }  c_1 = g^k \land c_2 = m * h_B^k
 \end{equation}
 
 \(B\) can find \(h_B^k\) by using \(c_1\) and his own secret key:
@@ -19,11 +19,28 @@ sender can now construct a ciphertext \(c\) from a randomly selected \(k\):
 	h_B^k = g^{x_B*k} = c_1^{x_B}
 \end{equation}
 
-Finding \(m\) is then as simple as \(m = c_2/h_B^k\). [ElGamal85]
+Finding \(m\) is then as simple as \(m = c_2/h_B^k\). \cite{elgamal} (p.1)
 
-\paragraph{ElGamal with Elliptic Curves}
-This can be adapted to elliptic curves, easily, by using ---
+\paragraph{Adapting to Elliptic Curves}
+\cite{hankerson2010} describes a straight-forward way of adapting the ElGamal system to use with
+Elliptic Curves.\footnote{Hankerson et.al. credit Koblitz and Miller with, independently, proposing
+"using the group of points on an elliptic curve defined over a finite field to devise discrete
+logarithm cryptographic schemes." (p. 21)} The sender \(A\) and recipient \(B\) agree on a curve \(E\)
+(over a finite field \(\mathbb{F}_p\)) and a generator point \(P\). The prime order \(n\) of \(P\) is
+known, as well.
 
-Differences are...
+The recipient then computes a public key \(Q_B\) (a point) from a randomly selected secret key
+\(d_B \in_R [1,n-1]\) (an integer), and distributes the public key to the sender. \(A\) can now encrypt
+a plaintext \(m\), represented as a point \(M\) on the curve, in such a way that only \(B\) can decrypt
+it. This is done by selecting a random \(k \in_R [1,n-1]\) and the computing the ciphertext \(c\), a
+tuple of two points:
 
-Required maths---
+\begin{equation}
+	c = (C_1, C_2)  \text{     where  }  C_1 = kP \land C_2 = M+kQ
+\end{equation}
+
+The recipient can now decrypt the message by using his secret key, \(d_B\):
+
+\begin{equation}
+	M = C_2 - d_B C_1
+\end{equation}
