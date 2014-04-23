@@ -1,15 +1,28 @@
 \subsubsection{Montgomery Curves}
 
-Most safe curves\footnote{According to http://safecurves.cr.yp.to/} are not of the naively suppoorted
-Weierstrass simple form, but rather of the slightly different \emph{Montgomery form}. Montgomery curves
-have the form \(y^2 = x^3 + ax^2 + x\).
+Note: Explain in more detail the safety of curves.
 
-Montgomery curves can be translated into the Weierstrass simple form (although the reverse is not always
-possible)\footnote{http://safecurves.cr.yp.to/equation.html}, but with the cost that the Weierstrass form
-will have parameters that are huge compared to the Montgomery form. For example, the Montgomery curve,
-\verb|Curve25519| has the equation \(y^2 = x^3+486662x^2+x\)\footnote{http://safecurves.cr.yp.to/}, but
-translated into the Weierstrass simple form, it will have an equation that does not fit on a normal A4
-page:\footnote{Appendix with calculations, due to Lorena}
+Most safe curves\footnote{According to http://safecurves.cr.yp.to/} are not of the supported simple
+Weierstrass form, but are rather represented as \emph{Edwards} or \emph{Montgomery} curves. Both of
+these types of curves are more recent than the simple Weierstrass forms, and have shown to have some
+desireable properties\footnote{Source? Expand on this.}
+
+Note: Why have I chosen Montgomery and not Edwards curves?
+
+Montgomery curves have the following form:
+
+\begin{equation}
+	y^2 = x^3 + ax^2 + x
+\end{equation}
+
+It is possible to represent all curves in Weierstrass simple forms, and as such it is also possible to
+transform any of the safe Montgomery curves to this form.\cite{safecurves}
+This does not, however, come without a cost, as the Weierstrass form of a Montgomery curve will have
+very large integers as its parameters, compared to those in the original Montgomery form. For example,
+the Montgomery curve, \verb|Curve25519| has the equation \(y^2 = x^3+486662x^2+x\), but
+translated into the Weierstrass simple form, it will have an equation that does not fit on the width of
+a normal A4 page:\footnote{See the full calculations and equation in Appendix \ref{app:montgomery_weierstrass}.
+{\bf Note: Appendix with calculations, due to Lorena!}}
 
 \begin{equation}
 	y^2 =
@@ -18,15 +31,17 @@ page:\footnote{Appendix with calculations, due to Lorena}
 	55751746669818908907645289078257140818241103727901012315294400837956729358436
 \end{equation}
 
-Note: What is "acceptable change in parameters"? (Guide to Elliptic Curve Cryptography)
+Note: What is "acceptable change in parameters"? (The "rule" that is used to transform curves to Weierstrass form.) (Guide to Elliptic Curve Cryptography)
 
-Operations on this curve are much harder.
+Note: In addition to smaller parameters, Montgomery curves have other inherent factors that result in quicker
+computations. List them here.
 
-In addition to smaller parameters, Montgomery curves have other inherent factors that result in quicker
-computations\footnote{source?}.
+Note: Operations on this curve are less trivial. It is also not supported by BouncyCastle.
 
-These are two strong arguments (safety and performance) for supporting Montgomery curves natively (and
-not just through transformations). The question then becomes: is it feasible in the scope of this
-project to implement these curves?
+Note: Arithmetic section here :)
 
-To be elaborated...
+\paragraph{Addition}
+
+\paragraph{Doubling}
+
+\paragraph{Subtraction}
