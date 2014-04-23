@@ -1,48 +1,31 @@
-\paragraph{Arithmetic}
-
-Note: Illustrations of the idea here would be nice.
-
-The addition, \(P + Q\), is done by drawing a line through the points, \(P\) and \(Q\),
-and finding the point \(R_{reflection})\), where the line intersects the curve again. This point is
-then reflected over the x-axis to find \(R\), the result. (Guide to Elliptic Curve Crypto... p. 79)
-
-The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
-\(R_{reflection}\) is once again found at the line's (in this case the tangent's) next intersection
-with the curve, and the result \(R\), is found by reflecting \(R_{reflection}\). (Guide to Elliptic Curve Crypto... p.79)
-
-Group law for \(E/K\), integers in K, where K is a (finite) field.
-\(y^2 = x^3 + ax + b\), char(K) not= 2,3
-
-\(P + \infty = P\) (Adding a point to infinity yields the point)
-
-\(P=(x,y) \implies -P=(x,-y)\) (negation is done by negating y)
-
-\(P - P = \infty\) (a point subtracted from itself yields infinity)
-
-\(-\infty = \infty\) (negative infinity equals infinity)
-
 \paragraph{Addition}
 
-Actual addition (Guide to elliptic curve crypto... p. 80)
-\begin{quote}
-	3. Point addition. Let P = (x1,y1) in E(K) and Q = (x2,y2) in E(K), where P not= -+ Q.
-	Then P+Q = (x3,y3), where
-	
-	x3 = ((y2-y1)/(x2-x1))\^2 - x1 - x    and    y3 = ((y2-y1)/(x2-x1))*(x1-x3)-y1
-\end{quote}
+Addition of two points \(P + Q = R\) is a fairly straight-forward matter. Given two points, \(P = (x_1,y_1)\) and
+\(Q = (x_2,y_2)\), the result \(R = (x_3,y_3)\) can be found with the following calculations:
 
-Implementation
-\begin{verbatim}
-	public override Point Add(Point q)
-	{
-	    //p + infinity = p
-	    if (q == Infinity)
-	        return this;
+\begin{equation}
+	\lambda = {{y_2-y_1} \over {x_2-x_1}}
+\end{equation}
 
-	    //p + -p = infinity
-	    if (this == -q)
-	        return Infinity;
-\end{verbatim}
+\begin{equation}
+	x_3 = \lambda^2 - x_1 - x_2 \textbf{ and } y_3 = \lambda (x_1 - x_3) - y_1
+\end{equation}
+
+As elliptic curves also contain the \(\infty\) (infinity) point, there is a single exception to this
+rule: \(Q = \infty \lor P = \infty \implies P + Q = \infty\) (if either \(P\) or \(Q\) is infinity,
+the result of adding them will be infinity, too).
+
+\paragraph{Subtraction}
+
+A subtraction \(P - Q = R\) can be expressed through addition and negation, as \(P - Q = P + (-Q)\). Negation of a given
+\(P = (x,y)\) is calculated as \(-P = (x,-y)\). Subtraction can then be calculated as \((x_1,y_1) - (x_2,y_2) = (x_3,-y_3)\).
+
+As with addition, negation is complicated by the existence of the infinity point. The negation of infinity is infinity (negative
+infinity does not exist), and a point subtracted from itself is infinity:
+
+\begin{equation}
+	-\infty = \infty \textbf{ and } P - P = \infty
+\end{equation}
 
 \paragraph{Doubling}
 
@@ -52,3 +35,5 @@ Used if \(Q = P\) in \(P + Q\). Guide... p. 80 (quote)
 	
 	x3 = ((3x1\^2+a)/(2y1))\^2-2x1    and    y3 = ((3x1\^2+a)/2y1)*(x1-x3)-y1
 \end{quote}
+
+Note: All of this is from Hakerson p. 80.

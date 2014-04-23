@@ -1,6 +1,25 @@
-\subsection{Curves}
+\subsection{Curves and Point Arithmetic}
+
+Note: Add illustration of the arithmetic, and introduction here that explains that we are about to read
+the theoretical workings of the arithmetic (before delving into how these are calculated in different
+sources).
+
+The addition of two points, \(P + Q = R\), is done by drawing a line through the points, \(P\) and \(Q\),
+and finding the point \(R_{reflection})\), where the line intersects the curve again. This point is
+then reflected over the x-axis to find \(R\), the result. (Guide to Elliptic Curve Crypto... p. 79)
+
+The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
+\(R_{reflection}\) is once again found at the line's (in this case the tangent's) next intersection
+with the curve, and the result \(R\), is found by reflecting \(R_{reflection}\). (Guide to Elliptic Curve Crypto... p.79)
+
+Note: Negation of points, subtraction.
+
+A point can be multiplied with an integer \(dP\), which is the equivalent of adding \(P\) to itself \(d\) times.
 
 Note: Why did we choose weierstrass instead of F2m curves (possibly supersingular)?
+
+Note: Make sure the curves are comparable from the description, or compare them when presenting
+the montgomery curves.
 
 \input{maths/curve/weierstrass}
 \input{maths/curve/montgomery}
