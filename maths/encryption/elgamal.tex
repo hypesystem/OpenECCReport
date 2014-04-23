@@ -10,7 +10,7 @@ key \(h_B = g^{x_B}\). The public key is distributed to the sender. Given a mess
 sender can now construct a ciphertext \(c\) from a randomly selected \(k\):
 
 \begin{equation}
-	c = (c_1, c_2)  \text{     where  }  c_1 = g^k \land c_2 = m * h_B^k
+	c = (c_1, c_2)  \textbf{ where }  c_1 = g^k \land c_2 = m * h_B^k
 \end{equation}
 
 \(B\) can find \(h_B^k\) by using \(c_1\) and his own secret key:
@@ -29,14 +29,14 @@ logarithm cryptographic schemes." (p. 21)} The sender \(A\) and recipient \(B\) 
 (over a finite field \(\mathbb{F}_p\)) and a generator point \(P\). The prime order \(n\) of \(P\) is
 known, as well.
 
-The recipient then computes a public key \(Q_B\) (a point) from a randomly selected secret key
+The recipient then computes a public key \(Q_B = d_B * P\) (a point) from a randomly selected secret key
 \(d_B \in_R [1,n-1]\) (an integer), and distributes the public key to the sender. \(A\) can now encrypt
 a plaintext \(m\), represented as a point \(M\) on the curve, in such a way that only \(B\) can decrypt
 it. This is done by selecting a random \(k \in_R [1,n-1]\) and the computing the ciphertext \(c\), a
 tuple of two points:
 
 \begin{equation}
-	c = (C_1, C_2)  \text{     where  }  C_1 = kP \land C_2 = M+kQ
+	c = (C_1, C_2)  \textbf{ where }  C_1 = kP \land C_2 = M+kQ
 \end{equation}
 
 The recipient can now decrypt the message by using his secret key, \(d_B\):
