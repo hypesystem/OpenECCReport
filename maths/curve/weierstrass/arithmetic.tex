@@ -15,6 +15,19 @@ As elliptic curves also contain the \(\infty\) (infinity) point, there is a sing
 rule: \(Q = \infty \lor P = \infty \implies P + Q = \infty\) (if either \(P\) or \(Q\) is infinity,
 the result of adding them will be infinity, too).
 
+\paragraph{Doubling}
+
+If the points being added are equal to one another (\(P + Q = R \text{, where } P = Q\)), the result on the curve of form
+\(y^2 = x^3 + ax + b\) can be calculated with a simplified formula:
+
+\begin{equation}
+	\lambda = {{3x_1^2 + a} \over {2y_1}} \text{, where } a \text { is the parameter from the curve formula }
+\end{equation}
+
+\begin{equation}
+	x_3 = \lambda^2 - 2x_1 \textbf{ and } y_3 = \lambda (x_1 - x_3) - y_1
+\end{equation}
+
 \paragraph{Subtraction}
 
 A subtraction \(P - Q = R\) can be expressed through addition and negation, as \(P - Q = P + (-Q)\). Negation of a given
@@ -27,13 +40,4 @@ infinity does not exist), and a point subtracted from itself is infinity:
 	-\infty = \infty \textbf{ and } P - P = \infty
 \end{equation}
 
-\paragraph{Doubling}
-
-Used if \(Q = P\) in \(P + Q\). Guide... p. 80 (quote)
-\begin{quote}
-	Let P = (x1,y1) in E(K), where P not= -P. Then 2P = (x3,y3), where
-	
-	x3 = ((3x1\^2+a)/(2y1))\^2-2x1    and    y3 = ((3x1\^2+a)/2y1)*(x1-x3)-y1
-\end{quote}
-
-Note: All of this is from Hakerson p. 80.
+Note: All of the above is from Hakerson p. 80.
