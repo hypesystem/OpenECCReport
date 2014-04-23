@@ -1,9 +1,27 @@
 \subsubsection{ElGamal}
 
-ElGamal is -- history -- public key cryptography -- stuff.
+In 1985, ElGamal was proposed as a public key system, including a key distribution scheme based
+on the difficulty of computing discrete logarithms. It allows messages to be sent from a sender
+\(A\) to a recipient \(B\) to be encrypted in such a way that only \(B\) can decrypt them.
 
-Traditional ElGamal uses pub and priv keys for... (maths!)
+The sender and recipient agree on a common finite field (over a large prime \(p\)) to work in,
+and use the same generator \(g\) for that field. \(B\) generates a secret key \(x_B\) and a public
+key \(h_B = g^{x_B}\). The public key is distributed to the sender. Given a message \(m\), the
+sender can now construct a ciphertext \(c\) from a randomly selected \(k\):
 
+\begin{equation}
+	c = (c_1, c_2) \verb+     where  +  c_1 = g^k  \verb+ and +  c_2 = m * h_B^k
+\end{equation}
+
+\(B\) can find \(h_B^k\) by using \(c_1\) and his own secret key:
+
+\begin{equation}
+	h_B^k = g^{x_B*k} = c_1^{x_B}
+\end{equation}
+
+Finding \(m\) is then as simple as \(m = c_2/h_B^k\). [ElGamal85]
+
+\paragraph{ElGamal with Elliptic Curves}
 This can be adapted to elliptic curves, easily, by using ---
 
 Differences are...
