@@ -1,11 +1,36 @@
 \subsection{Encoding}
 \label{sec:math_encoding}
 
-In order to represent messages as points (as used in ElGamal encryption, see Section \ref{sec:math_enc_elgamal}) they must be encoded.
+In order to encrypt a message using elliptic curves (in the likes of the adapted ElGamal cryptosystem, see Section \ref{sec:math_enc_elgamal},
+but not in hybrid cryptosystems,\footnote{Hybrid systems use an underlying symmetric system to make encoding obsolete.} see Section
+\ref{sec:math_enc_ecies}), a way must be found to encode them as points on the curve.
 
---- rest of encoding section is notes ---
+Note: Trivial to map to the correct numberspace, but non-trivial to make sure that it is a point.
 
-InjectiveEncodings:
+\subsubsection{Koblitz MappingAMessage stuff}
+
+Koblitz is attributed with an algorithm that maps a message \(m\), represented as an integer in \(\mathbb{Z}_p\), to a point on the curve of the
+simple Weierstrass form \(y^2 = x^3 + ax + b \text{ mod } p\).
+
+An integer K is selected such that \((M + 1)K < p\), and this is used to compute
+a candidate x-coordinate for the point, \(x_j = MK + j \text{ mod } p\). To verify the validity of the candidate, a check is performed: \(x_j\)
+is a valid x-coordinate for a point on the curve if \(z_j = x_j^3 + ax_j + b\) has a square root. If the candidate is valid, the message \(m\)
+can be mapped to a point \(M\) on the curve:
+
+\begin{equation}
+	M = (x_j, y_j) \text{, where } y_j = \sqrt{z_j} \text{ mod } p
+\end{equation}
+
+If no square root exists for \(z_j\) for all \(j\), \(j = 0 \text{ to } K-1\), then it is not possible to map the message to a point. In other
+words, the method is probablistic and it is possible that a message cannot be encoded.\cite{MappingAMessage}
+
+Note: Consider using the source \cite{MappingAMessage} uses instead of it (go to the sources), as the paper is actually about improving the mapping
+for certain types of points. The original source is "W. Trappe and L. C. Washington, \emph{Introduction to Cryptography with Coding Theory}. 2nd Edition,
+Prentice Hall, 2006."
+
+\subsubsection{InjectiveEncodings}
+
+--- injective encoding section is notes ---
 
 \begin{quote}
     For certain groups \(\mathbb{G}\), like ... supersingular elliptic curves, it is not difficult to construct injective
