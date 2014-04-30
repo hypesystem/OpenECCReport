@@ -24,6 +24,8 @@ can be mapped to a point \(M\) on the curve:
 If no square root exists for \(z_j\) for all \(j\), \(j = 0 \text{ to } K-1\), then it is not possible to map the message to a point. In other
 words, the method is probablistic and it is possible that a message cannot be encoded.\cite{MappingAMessage}
 
+The point can be decode again by computing \(m = {\lfloor {{x} \over {K}} \rfloor}\).
+
 Note: Consider using the source \cite{MappingAMessage} uses instead of it (go to the sources), as the paper is actually about improving the mapping
 for certain types of points. The original source is "W. Trappe and L. C. Washington, \emph{Introduction to Cryptography with Coding Theory}. 2nd Edition,
 Prentice Hall, 2006."
