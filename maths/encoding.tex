@@ -1,16 +1,20 @@
 \subsection{Encoding}
 \label{sec:math_encoding}
 
-In order to encrypt a message using elliptic curves (in the likes of the adapted ElGamal cryptosystem, see Section \ref{sec:math_enc_elgamal},
-but not in hybrid cryptosystems,\footnote{Hybrid systems use an underlying symmetric system to make encoding obsolete.} see Section
-\ref{sec:math_enc_ecies}), a way must be found to encode them as points on the curve.
+Some elliptic curve based cryptosystems (such as the adapted ElGamal in Section \ref{sec:math_encryption}) are constructed to encrypt points on a curve. To make
+this useful an original string message must be encoded as a point. The encoding must be reversible.
 
-Note: Trivial to map to the correct numberspace, but non-trivial to make sure that it is a point.
+It is trivial to map a message string to the correct numberspace as both strings and numbers have binary representations. The number is then
+simply found by converting a string to its binary representation and interpreting this as an integer. Using the ASCII character set the string
+\verb+"A"+ is mapped to the number \verb+65+.
 
-\subsubsection{Probablistic Mapping}
+\begin{verbatim}
+    string_to_binary "A" -> 1000001
+    binary_to_integer 1000001 ->  65
+\end{verbatim}
 
 Koblitz is attributed with an algorithm that maps a message \(m\), represented as an integer in \(\mathbb{Z}_p\), to a point on the curve of the
-simple Weierstrass form \(y^2 = x^3 + ax + b \text{ mod } p\).
+simple Weierstrass form \(y^2 = x^3 + ax + b \text{ mod } p\).\cite{MappingAMessage}
 
 An integer K is selected such that \((M + 1)K < p\), and this is used to compute
 a candidate x-coordinate for the point, \(x_j = MK + j \text{ mod } p\). To verify the validity of the candidate, a check is performed: \(x_j\)
@@ -24,28 +28,12 @@ can be mapped to a point \(M\) on the curve:
 If no square root exists for \(z_j\) for all \(j\), \(j = 0 \text{ to } K-1\), then it is not possible to map the message to a point. In other
 words, the method is probablistic and it is possible that a message cannot be encoded.\cite{MappingAMessage}
 
-The point can be decode again by computing \(m = {\lfloor {{x} \over {K}} \rfloor}\).
+The point can be decoded again by computing \(m = {\lfloor {{x} \over {K}} \rfloor}\).
 
-Note: Largest possible K can be found as \(K = \lfloor {{p} \over {m + 1}} \rfloor\).
+\textbf{Note: Largest possible K can be found as \(K = \lfloor {{p} \over {m + 1}} \rfloor\).}
 
-Note: Performance related to size of K should be discussed here. K is used in multiplication (inefficient for large K!), probability of finding
-a mapping depends on K (more likely the larger K). Discuss tradeoff! (See MappingAPoint.)
+\textbf{Note: Performance related to size of K should be discussed here. K is used in multiplication (inefficient for large K!), probability of finding
+a mapping depends on K (more likely the larger K). Discuss tradeoff! (See MappingAPoint.)}
 
-Note: Messages can at most have a certain length. Any greater than p and they are not decodeable!
-
-Note: Consider using the source \cite{MappingAMessage} uses instead of it (go to the sources), as the paper is actually about improving the mapping
-for certain types of points. The original source is "W. Trappe and L. C. Washington, \emph{Introduction to Cryptography with Coding Theory}. 2nd Edition,
-Prentice Hall, 2006."
-
-\subsubsection{InjectiveEncodings}
-
---- injective encoding section is notes ---
-
-\begin{quote}
-    For certain groups \(\mathbb{G}\), like ... supersingular elliptic curves, it is not difficult to construct injective
-	encodings...
-\end{quote}
-
-(from p.2) Supersingular curves are \(F_2m\) curves (not supported by us).
-
-2.4: One can construct a probablistic injective encoding with size equal to about half of the size of \(\mathbb{G}\) (p.2)
+As the numberspace the messages must be mapped to is limited by the size of the prime field \(\mathbb{F}_p\) over which the curve is defined, so is the
+length of the message. The numeric value of a string can be no greater than \(p\).

@@ -1,4 +1,3 @@
-\subsubsection{ElGamal}
 \label{sec:math_encryption_elgamal}
 
 In 1985, ElGamal was proposed as a public key system, including a key distribution scheme based
@@ -8,7 +7,7 @@ on the difficulty of computing discrete logarithms. It allows messages to be sen
 The sender and recipient agree on a common finite field (over a large prime \(p\)) to work in,
 and use the same generator \(g\) for that field. \(B\) generates a secret key \(x_B\) and a public
 key \(h_B = g^{x_B}\). The public key is distributed to the sender. Given a message \(m\), the
-sender can now construct a ciphertext \(c\) from a randomly selected \(k\):
+sender can now construct a ciphertext \(c\) from a randomly selected \(k\):\cite{elgamal}
 
 \begin{equation}
 	c = (c_1, c_2)  \textbf{ where }  c_1 = g^k \land c_2 = m * h_B^k
@@ -20,15 +19,19 @@ sender can now construct a ciphertext \(c\) from a randomly selected \(k\):
 	h_B^k = g^{x_B*k} = c_1^{x_B}
 \end{equation}
 
-Finding \(m\) is then as simple as \(m = c_2/h_B^k\). \cite{elgamal} (p.1)
+Finding the original message \(m\) is then as simple as:
+
+\begin{equation}
+    m = c_2/h_B^k
+\end{equation}
 
 \paragraph{Adapting to Elliptic Curves}
-\cite{hankerson2010} describes a straight-forward way of adapting the ElGamal system to use with
+Hankerson et.al. describe a straight-forward way of adapting the ElGamal system to use with
 Elliptic Curves.\footnote{Hankerson et.al. credit Koblitz and Miller with, independently, proposing
-"using the group of points on an elliptic curve defined over a finite field to devise discrete
-logarithm cryptographic schemes." (p. 21)} The sender \(A\) and recipient \(B\) agree on a curve \(E\)
+``using the group of points on an elliptic curve defined over a finite field to devise discrete
+logarithm cryptographic schemes.''\cite{hankerson2010}} The sender \(A\) and recipient \(B\) agree on a curve \(E\)
 (over a finite field \(\mathbb{F}_p\)) and a generator point \(P\). The prime order \(n\) of \(P\) is
-known, as well.
+known, as well.\cite{hankerson2010}
 
 The recipient then computes a public key \(Q_B = d_B * P\) (a point) from a randomly selected secret key
 \(d_B \in_R [1,n-1]\) (an integer), and distributes the public key to the sender. \(A\) can now encrypt
