@@ -52,4 +52,4 @@ Scalar multiplication of a point \(P\) and an integer \(d\) is calculated throug
 Several algorithms to speed up this process exist. Multiplication is the slowest operation performed in ECC, and its performance should
 be considered carefully.\footnote{The DoubleAndAdd method limits the number of additions necessary by doubling the accumulating result
 whenever possible, instead of naively adding \(P\); \textbf{Note: Explain FpNaf...}. Both of these methods are supported in OpenECC, and
-the implementation can easily be extended with more multiplication algorithms (see Section \ref{sec:implementatino}).}
+the implementation can easily be extended with more multiplication algorithms (see Section \ref{sec:implementation_multipliers}).}

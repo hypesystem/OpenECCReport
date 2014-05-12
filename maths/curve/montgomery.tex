@@ -1,12 +1,10 @@
 \subsubsection{Other Curve Forms}
 
-Most safe curves\footnote{According to http://safecurves.cr.yp.to/. \textbf{Note: Find the requirement
-that is missing, mention it here.}} are not of the supported simple
-Weierstrass form, but are rather represented as Edwards or Montgomery curves. Both of
-these types of curves are more recent than the simple Weierstrass forms, and have shown to have some
-desireable properties.\footnote{Source? Expand on this.}
+There are more efficient representations of elliptic curves than the simple
+Weierstrass form. Both Edwards or Montgomery curves are more recent than the simple Weierstrass forms,
+and have shown to have some desirable properties.\cite{safecurves}
 
-Neither Montgomery nor Edwards curves are supported in \emph{OpenECC}, but they can be converted to the
+Neither Montgomery nor Edwards curves are supported in OpenECC, but they can be converted to the
 usable Weierstrass form. Montgomery curves have the following formula:
 
 \begin{equation}
@@ -21,8 +19,7 @@ This does not come without a cost as the Weierstrass form of a Montgomery curve 
 very large integers as its parameters, compared to those in the original Montgomery form. For example,
 the Montgomery curve, \verb|Curve25519| has the equation \(y^2 = x^3+486662x^2+x\), but
 translated into the Weierstrass simple form, it will have an equation that does not fit on the width of
-a normal A4 page:\footnote{See the full calculations and equation in Appendix \ref{app:montgomery_weierstrass}.
-\textbf{Note: Appendix with calculations, due to Lorena!}}
+a normal A4 page:\footnote{See the full calculations and equation in Appendix \ref{app:montgomery_weierstrass}.}
 
 \begin{equation}
 	y^2 =
@@ -33,4 +30,5 @@ a normal A4 page:\footnote{See the full calculations and equation in Appendix \r
 
 These large parameters make Montgomery curves infeasible to use, as multiplication would be very slow. As such,
 it is discouraged to use curves that are not normally in the Weierstrass form.\footnote{Unless support for Montgomery
-curves is implemented in the future, which is enabled by the extendable structure of OpenECC (see Section \ref{sec:implementation}).}
+curves is implemented in the future, which is enabled by the extendable structure of OpenECC (see Section
+\ref{sec:implementation_curves}).}

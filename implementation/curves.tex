@@ -1,5 +1,33 @@
 \subsection{Curves and Points}
 \label{sec:implementation_curves}
 
-Note: Swappability
-Note: Syntax!
+OpenECC implements only curves of the simple Weierstrass form, internally known as \verb+WeierstrassCurve+s,
+but is open to implementing different types of curves in the future.
+
+Each curve implementation (implementing the \verb+ICurve+ interface) must have its own point implementation
+(implementing the \verb+Point+ abstract class). A curve describes both the properties of the curve itself and
+the properties used for encryption.
+
+The simple Weierstrass curve describes the parameters \(a\) and \(b\) in the curve \(y^2 = x^3 + ax + b\), but
+also the prime \(p\) of the prime field \(\mathbb{F}_p\) the curve is defined over; the generator point of the
+curve; and the order of the generator point.
+
+For each curve, the most basic point arithmetic must be implemented. This is limited to addition and negation, as
+subtraction is implemented as \verb+p + (-q)+, and multiplication is implemented by the multipliers (see the next
+section).
+
+The \verb+Point+ abstract class provides a nice syntax (compared with, for example, that of BouncyCastle), overriding
+operators to make the syntax look natural: \verb|p + q| instead of \verb|p.Add(q)|, and \verb|p + (q - r)| instead of
+\verb|p.Add(q.Subtract(r))|.
+
+Instead of requiring the user of the library to know of safe curve parameters, some well-known curves have been
+provided through the \verb|CurveFactory|. While only Weierstrass curves -- which are not necessarily
+safe\footnote{All known Weierstrass curves have some issues regarding safety, leaking information through timing
+attacks, their points being distinguishable from truly random strings, etc.\cite{safecurves}} -- are supported, and no real
+guarantee of security can be made, this approach discourages experimentation, and the resulting unsafe curves.
+
+Custom curves can still be constructed through the constructors of the curve implementations.
+
+\begin{figure}
+	
+\end{figure}

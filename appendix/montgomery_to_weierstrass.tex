@@ -1,0 +1,40 @@
+\section{Converting a Montgomery Curve to the simple Weierstrass form}
+\label{app:montgomery_weierstrass}
+
+It is possible to transform a curve of the Montgomery form to the simple Weierstrass form, at the expense
+of very long parameters, and thus, very inefficient computation with the resulting curve.\cite{safecurves}
+
+\begin{equation}
+	Curve25519: y^2 = x^3 + 486662 x^2 + x
+\end{equation}
+
+Curve25519 is a Montgomery curve of the form \(By^2 = x^3 + Ax^2 + x\) over a prime field \(\mathbb{F}_p\) 
+with the following parameters:
+
+\begin{equation}
+\begin{split}
+	p = 5789604461865809771178549250434395392663499233282028\\2019728792003956564819949
+\end{split}
+\end{equation}
+
+\begin{equation}
+	B = 1
+\end{equation}
+
+\begin{equation}
+	A = 486662
+\end{equation}
+
+The resulting Weierstrass curve \(y^2 + x^3 + ax + b\) over the same prime field can now be found:
+
+\begin{equation}
+\begin{split}
+	a = {{3-A^2} \over {3B^2}} = 19298681539552699237261830834781317975544997\\444273427339909597334573241639236
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	b = {{2A^3-9A} \over {27B^3}} = 557517466698189089076452890782571408182411\\03727901012315294400837956729358436
+\end{split}
+\end{equation}
