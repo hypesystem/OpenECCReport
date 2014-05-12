@@ -3,6 +3,23 @@
 
 Note: Measure every different combination of the constructs created (see maths section). Create beautiful graphs!
 
+Note: Where in the program is time spent? How much time does each thing take? (BigInteger conversion is probably
+a time-stealer!!!)
+
+Write a timemanager class and Timed* Wrappers of everything, so the constructs can be measured:
+
+\begin{verbatim}
+class TimedEncryptor {
+  public TimedEncryptor(IEncryptor end) {...}
+  public Ciphertext Encrypt(...) {
+    StartTimer
+    var result = enc.Encrypt(...);
+    RecordTime
+    return result;
+  }
+}
+\end{verbatim}
+
 \subsection{BouncyCastle Comparison}
 \label{sec:performance_bouncycastle}
 Note: Measure against bouncycastle encryption with the same curve. Create beautiful (but devastating) graph!
