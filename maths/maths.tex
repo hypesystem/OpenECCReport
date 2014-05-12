@@ -5,17 +5,20 @@ Curve Cryptography. Elliptic curve arithmetic is a subset of finite field arithm
 of the scope of this project, an external source was used (see Section \ref{sec:implementation__dependencies}) and
 the mathematics underlying finite fields will not be discussed here.
 
-\textbf{Note: Add illustration of the arithmetic, and introduction here that explains that we are about to read
-the theoretical workings of the arithmetic (before delving into how these are calculated in different
-sources).}
-
 Conceptually, the addition of two points, \(P + Q = R\), is done by drawing a line through the points, \(P\) and \(Q\),
 and finding the point \(-R)\), where the line intersects the curve again. This point is
 then reflected over the x-axis to find \(R\), the result.
 
 The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
-\(R_{reflection}\) is once again found at the line's (in this case the tangent's) next intersection
+\(-R\) is once again found at the line's (in this case the tangent's) next intersection
 with the curve, and the result \(R\), is found by reflecting \(-R\).\cite{hankerson2010}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics{maths/addition}
+	\includegraphics{maths/doubling}
+	\caption{Conceptual addition (left) and doubling (right) of points on elliptic curves.}
+\end{figure}
 
 In the following, the mathematical constructs required for encryption are shown: artihmetic with points on the simplest
 form of curves (the Weierstrass simple form, Section \ref{sec:math_curve}), probablistic encoding of a string message

@@ -1,28 +1,28 @@
-\subsubsection{Montgomery Curves}
+\subsubsection{Other Curve Forms}
 
-Note: Explain in more detail the safety of curves.
-
-Most safe curves\footnote{According to http://safecurves.cr.yp.to/} are not of the supported simple
-Weierstrass form, but are rather represented as \emph{Edwards} or \emph{Montgomery} curves. Both of
+Most safe curves\footnote{According to http://safecurves.cr.yp.to/. \textbf{Note: Find the requirement
+that is missing, mention it here.}} are not of the supported simple
+Weierstrass form, but are rather represented as Edwards or Montgomery curves. Both of
 these types of curves are more recent than the simple Weierstrass forms, and have shown to have some
-desireable properties\footnote{Source? Expand on this.}
+desireable properties.\footnote{Source? Expand on this.}
 
-Note: Why have I chosen Montgomery and not Edwards curves?
-
-Montgomery curves have the following form:
+Neither Montgomery nor Edwards curves are supported in \emph{OpenECC}, but they can be converted to the
+usable Weierstrass form. Montgomery curves have the following formula:
 
 \begin{equation}
 	y^2 = x^3 + ax^2 + x
 \end{equation}
 
-It is possible to represent all curves in Weierstrass simple forms, and as such it is also possible to
-transform any of the safe Montgomery curves to this form.\cite{safecurves}
-This does not, however, come without a cost, as the Weierstrass form of a Montgomery curve will have
+Whereas it is possible to represent all curves in Weierstrass simple forms, the same cannot be said for
+the Montgomery form (or the Edwards form for that matter). It is, however, possible to
+transform any of the safe Montgomery curves to the Weierstrass form.\cite{safecurves}
+
+This does not come without a cost as the Weierstrass form of a Montgomery curve will have
 very large integers as its parameters, compared to those in the original Montgomery form. For example,
 the Montgomery curve, \verb|Curve25519| has the equation \(y^2 = x^3+486662x^2+x\), but
 translated into the Weierstrass simple form, it will have an equation that does not fit on the width of
 a normal A4 page:\footnote{See the full calculations and equation in Appendix \ref{app:montgomery_weierstrass}.
-{\bf Note: Appendix with calculations, due to Lorena!}}
+\textbf{Note: Appendix with calculations, due to Lorena!}}
 
 \begin{equation}
 	y^2 =
@@ -31,17 +31,6 @@ a normal A4 page:\footnote{See the full calculations and equation in Appendix \r
 	55751746669818908907645289078257140818241103727901012315294400837956729358436
 \end{equation}
 
-Note: What is "acceptable change in parameters"? (The "rule" that is used to transform curves to Weierstrass form.) (Guide to Elliptic Curve Cryptography)
-
-Note: In addition to smaller parameters, Montgomery curves have other inherent factors that result in quicker
-computations. List them here.
-
-Note: Operations on this curve are less trivial. It is also not supported by BouncyCastle.
-
-Note: Arithmetic section here :)
-
-\paragraph{Addition}
-
-\paragraph{Doubling}
-
-\paragraph{Subtraction}
+These large parameters make Montgomery curves infeasible to use, as multiplication would be very slow. As such,
+it is discouraged to use curves that are not normally in the Weierstrass form.\footnote{Unless support for Montgomery
+curves is implemented in the future, which is enabled by the extendable structure of OpenECC (see Section \ref{sec:implementation}).}

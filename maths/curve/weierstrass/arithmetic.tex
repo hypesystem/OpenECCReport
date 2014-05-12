@@ -20,8 +20,8 @@ rule: if either \(P\) or \(Q\) is infinity, the result of adding them will be in
 
 \paragraph{Doubling}
 
-If the points being added are equal to one another (\(P + Q = R \text{, where } P = Q\)), the result on the curve of form
-\(y^2 = x^3 + ax + b\) can be calculated with a simplified formula:
+If the points being added are equal to one another (\(P + Q = R \text{, where } P = Q \text{ and } P = (x_1,y_1)\)),
+the result can be calculated with a simplified formula:
 
 \begin{equation}
 	\lambda = {{3x_1^2 + a} \over {2y_1}} \text{, where } a \text { is the parameter from the curve formula }
@@ -31,16 +31,25 @@ If the points being added are equal to one another (\(P + Q = R \text{, where } 
 	x_3 = \lambda^2 - 2x_1 \textbf{ and } y_3 = \lambda (x_1 - x_3) - y_1
 \end{equation}
 
+The resulting point is then \(R = (x_3, y_3)\).
+
 \paragraph{Subtraction}
 
-A subtraction \(P - Q = R\) can be expressed through addition and negation, as \(P - Q = P + (-Q)\). Negation of a given
-\(P = (x,y)\) is calculated as \(-P = (x,-y)\). Subtraction can then be calculated as \((x_1,y_1) - (x_2,y_2) = (x_3,-y_3)\).
+A subtraction \(P - Q = R\) can be expressed through addition and negation, as \(P - Q = P + (-Q)\). Negation of a given point
+\(P = (x,y)\) is calculated as \(-P = (x,-y)\) (a reflection over the x-axis).
 
-As with addition, negation is complicated by the existence of the infinity point. The negation of infinity is infinity (negative
-infinity does not exist), and a point subtracted from itself is infinity:
+As with addition, negation is complicated by the existence of the infinity point:
 
 \begin{equation}
 	-\infty = \infty \textbf{ and } P - P = \infty
 \end{equation}
 
-\cite{hankerson2010}
+The negation of infinity is infinity (negative infinity does not exist), and a point subtracted from itself is infinity.\cite{hankerson2010}
+
+\paragraph{Scalar Multiplication}
+
+Scalar multiplication of a point \(P\) and an integer \(d\) is calculated through repeated addition of the point to an accumulator.
+Several algorithms to speed up this process exist. Multiplication is the slowest operation performed in ECC, and its performance should
+be considered carefully.\footnote{The DoubleAndAdd method limits the number of additions necessary by doubling the accumulating result
+whenever possible, instead of naively adding \(P\); \textbf{Note: Explain FpNaf...}. Both of these methods are supported in OpenECC, and
+the implementation can easily be extended with more multiplication algorithms (see Section \ref{sec:implementatino}).}
