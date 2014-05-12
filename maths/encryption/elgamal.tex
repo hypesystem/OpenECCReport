@@ -5,24 +5,24 @@ on the difficulty of computing discrete logarithms. It allows messages to be sen
 \(A\) to a recipient \(B\) to be encrypted in such a way that only \(B\) can decrypt them.
 
 The sender and recipient agree on a common finite field (over a large prime \(p\)) to work in,
-and use the same generator \(g\) for that field. \(B\) generates a secret key \(x_B\) and a public
-key \(h_B = g^{x_B}\). The public key is distributed to the sender. Given a message \(m\), the
+and use the same generator \(g\) for that field. \(B\) generates a secret key \(d_B\) and a public
+key \(q_B = g^{d_B}\). The public key is distributed to the sender. Given a message \(m\), the
 sender can now construct a ciphertext \(c\) from a randomly selected \(k\):\cite{elgamal}
 
 \begin{equation}
-	c = (c_1, c_2)  \textbf{ where }  c_1 = g^k \land c_2 = m * h_B^k
+	c = (c_1, c_2)  \textbf{ where }  c_1 = g^k \land c_2 = m * q_B^k
 \end{equation}
 
-\(B\) can find \(h_B^k\) by using \(c_1\) and his own secret key:
+\(B\) can find \(q_B^k\) by using \(c_1\) and his own secret key:
 
 \begin{equation}
-	h_B^k = g^{x_B*k} = c_1^{x_B}
+	q_B^k = g^{d_B*k} = c_1^{d_B}
 \end{equation}
 
 Finding the original message \(m\) is then as simple as:
 
 \begin{equation}
-    m = c_2/h_B^k
+    m = c_2 \over q_B^k
 \end{equation}
 
 \paragraph{Adapting to Elliptic Curves}
@@ -30,21 +30,29 @@ Hankerson et.al. describe a straight-forward way of adapting the ElGamal system 
 Elliptic Curves.\footnote{Hankerson et.al. credit Koblitz and Miller with, independently, proposing
 ``using the group of points on an elliptic curve defined over a finite field to devise discrete
 logarithm cryptographic schemes.''\cite{hankerson2010}} The sender \(A\) and recipient \(B\) agree on a curve \(E\)
-(over a finite field \(\mathbb{F}_p\)) and a generator point \(P\). The prime order \(n\) of \(P\) is
-known, as well.\cite{hankerson2010}
+(over a finite field \(\mathbb{F}_p\)) and a generator point \(G\). The prime order \(n\) of \(G\) must also be
+known.
+
+\textbf{Note: Prime order info}
 
 The recipient then computes a public key \(Q_B = d_B * P\) (a point) from a randomly selected secret key
 \(d_B \in_R [1,n-1]\) (an integer), and distributes the public key to the sender. \(A\) can now encrypt
-a plaintext \(m\), represented as a point \(M\) on the curve, in such a way that only \(B\) can decrypt
+a plaintext \(m\), encoded as a point \(M\) on the curve, in such a way that only \(B\) can decrypt
 it. This is done by selecting a random \(k \in_R [1,n-1]\) and the computing the ciphertext \(c\), a
-tuple of two points:
+tuple of two points (notice how the exponentiation of traditional ElGamal has been replaced with scalar
+multiplication of points):
 
 \begin{equation}
-	c = (C_1, C_2)  \textbf{ where }  C_1 = kP \land C_2 = M+kQ
+	c = (C_1, C_2)  \textbf{ where }  C_1 = kP \land C_2 = M+kQ_B
 \end{equation}
 
-The recipient can now decrypt the message by using his secret key, \(d_B\):
+The recipient can now decrypt the message by using his secret key, \(d_B\), as \(kQ_B = kd_BP\):
 
 \begin{equation}
-	M = C_2 - d_B C_1
+	M = M + k Q_B - k d_B P = C_2 - d_B C_1
 \end{equation}
+
+The original plaintext point can now safely be decoded to the original plaintext message.\cite{hankerson2010}
+
+This concludes all the mathematics required for encrypting a message as a point on an elliptic curve, starting from
+the basics of curves, and moving all the way to the high-level encryption algorithm.
