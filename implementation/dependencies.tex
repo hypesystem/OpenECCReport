@@ -2,48 +2,27 @@
 \label{sec:implementation__dependencies}
 \label{sec:implementation_dependency}
 
-\begin{figure}
+An integral part of Elliptic Curve cryptography is finite field arithmetic. No implementation of finite field elements exists
+in the standard libraries of .NET, so an external source must be used. BouncyCastle provides an implementation (\texttt{FpFieldElement})
+that is repurposed and used in OpenECC.
+
+The repurposing is not without problems. BouncyCastle uses a custom implementation of integers, to allow large integers to
+be used, than the standard \texttt{System.Numerics.BigInteger}. Conversion between the two is non-trivial (especially as no documentation
+of the internal structure of BouncyCastle's \texttt{BigInteger} exists).
+
+The safest way of converting from \texttt{System.Numerics.BigInteger} to \texttt{Org.BouncyCastle.Math.EC.BigInteger} is then to
+convert one to a string and get the other to parse said string. This conversion, to and from string, is expected to be very slow.\footnote{The
+actual impact on performance is investigated in Section \ref{sec:performance_components}.}
+
+\begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.7\textwidth]{implementation/finitefields}
 	\caption{The \texttt{FiniteFieldElement} is simply a wrapper around \texttt{Org.BouncyCastle.Math.EC.FpFieldElement},
-		BouncyCastle's Finite Field implementation. It takes care of conversion between C\#'s native \texttt{BigIntegers} and
-		BouncyCastle's own \texttt{BigInteger} implementation.}
+		BouncyCastle's Finite Field implementation.}
 \end{figure}
 
-\textbf{Note: Review this section, ensure focus. Focus should be on the trouble of BigIntegers, and how
-this may be significantly damaging to performance. Then link to performance section where this is looked into.}
-
-\textbf{Note: the wrapper provides nice syntax, show the difference between bouncycastle's addition of points
-and ours.}
-
-An integral part of Elliptic Curve (and much other) cryptography is finite fields and arithmetic
-over finite fields. Per default no such functionality exists in C\#.
-
-Bouncy Castle contains, among other things, an implementation of finite fields, that is also used
-in the \emph{OpenECC} implementation.
-
-Integrating just the \verb+Org.BouncyCastle.Math.EC.FpFieldElement+ (finite field implementation) into
-the project is not trivial, however, as it uses a BigInteger implementation defined in BouncyCastle,
-which differs from that in C\#'s System.Numerics.BigInteger.
-
-To solve these issues, a wrapper (FiniteFieldElement) was created. This wrapper maps from BouncyCastle's
-BigIntegers to the normal BigIntegers, reducing the boilerplate between BouncyCastle and OpenECC to
-just one class.
-
-The primary problem here is converting between the two BigInteger implementations\footnote{This seems
-to be a previously unsolved problem, which has previously been posed (http://stackoverflow.com/questions/21756578/how-do-i-round-trip-a-number-to-bouncycastle-biginteger-system-numerics-big)}.
-In this implementation the string forms of the BigIntegers have been used to convert.
-
-\begin{verbatim}
-	...ToBouncyCastleBigInteger(this System.Numerics.BigInteger i)...
-	return new Org.BouncyCastle.Math.BigInteger(i.ToString());
-	
-	...
-	
-	...ToNativeBigInteger(this Org.BouncyCastle.Math.BigInteger i)...
-	return System.Numerics.BigInteger.Parse(i.ToString());
-\end{verbatim}
-
-This, admittedly, is far from efficient, but as there is little documentation of the byte-level structure
-of Bouncy Castle's BigIntegers the performance sacrifice was deemed preferable. The performance implications
-of this are covered in Section \ref{sec:performance}.
+OpenECC's \texttt{FiniteFieldElement} is a wrapper around BouncyCastle's \\
+\verb+FpFieldElement+ and provides access to the necessary methods.
+In addition to this, the \texttt{FiniteFieldElement} implementation also provides a nicer syntax for performing the necessary operations
+(for the same reasons as doing so for \texttt{Point}s). This will make future implementations of other constructs, that rely on finite fields,
+easier and more readable.
