@@ -13,8 +13,18 @@ also the prime \(p\) of the prime field \(\mathbb{F}_p\) the curve is defined ov
 curve; and the order of the generator point.
 
 For each curve, the most basic point arithmetic must be implemented. This is limited to addition and negation, as
-subtraction is implemented as \verb+p + (-q)+, and multiplication is implemented by the multipliers (see the next
-section).
+subtraction is implemented as negation and addition (\verb+p + (-q)+), and multiplication is implemented by the
+multipliers (see the next section). This arithmetic is implemented in a class inheriting from \verb+Point+.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1\textwidth]{implementation/curves}
+	\caption{An example of the constructs that must be implemented in order to support a curve. On each class
+		(\texttt{WeiserstassCurve} and \texttt{WeierstrassCurvePoint}) the methods and properties
+		that are implemented are shown. The \texttt{BigInteger}s \texttt{A} and \texttt{B} on the curve are
+		the curve parameters specific for this type of curve, and may vary from curve to curve. For example,
+		an Edwards curve is described by parameters known as \texttt{C} and \texttt{D}.}
+\end{figure}
 
 The \verb+Point+ abstract class provides a nice syntax (compared with, for example, that of BouncyCastle), overriding
 operators to make the syntax look natural: \verb|p + q| instead of \verb|p.Add(q)|, and \verb|p + (q - r)| instead of

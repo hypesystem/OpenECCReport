@@ -1,8 +1,20 @@
 \subsection{Encoders}
 \label{sec:implementation_encoding}
 
-While the encoding described in this paper, and thus implemented in OpenECC, is probabilistic (meaning that no
-guarantee can be made to its success) other algorithms for encoding do exist. While being significantly more
-mathematically advanced, they provide both performance and probability improvements.\cite{MappingAMessage}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.7\textwidth]{implementation/encoders}
+	\caption{An encoder has a certain amount of state (like the probabilistic encoding's key \(K\), see \ref{sec:math_encoding}), that is
+		set in the constructor. The interface requires only an encoding algorithm (\(Plaintext \to Point\)) and
+		a decoding algorithm (\(Point \to Plaintext\)).}
+\end{figure}
+
+The encoding algorithm introduces in this paper, and thus implemented in OpenECC, is probabilistic and supports
+only curves in the Weierstrass form. Other algorithms, both supporting other types of curves, and even some being
+deterministic, do exist.
+
+These other encoding schemes are significantly more mathematically advanced, but they also provide both performance
+and probability improvements.\cite{MappingAMessage}
+
 Being open for the future addition of these different encoders, and others that may be discovered, is important
 for the possible performance of the project.

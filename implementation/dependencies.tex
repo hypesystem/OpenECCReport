@@ -2,6 +2,14 @@
 \label{sec:implementation__dependencies}
 \label{sec:implementation_dependency}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{implementation/finitefields}
+	\caption{The \texttt{FiniteFieldElement} is simply a wrapper around \texttt{Org.BouncyCastle.Math.EC.FpFieldElement},
+		BouncyCastle's Finite Field implementation. It takes care of conversion between C\#'s native \texttt{BigIntegers} and
+		BouncyCastle's own \texttt{BigInteger} implementation.}
+\end{figure}
+
 \textbf{Note: Review this section, ensure focus. Focus should be on the trouble of BigIntegers, and how
 this may be significantly damaging to performance. Then link to performance section where this is looked into.}
 
