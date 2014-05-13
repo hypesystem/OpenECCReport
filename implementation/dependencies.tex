@@ -10,7 +10,8 @@ The repurposing is not without problems. BouncyCastle uses a custom implementati
 be used, than the standard \texttt{System.Numerics.BigInteger}. Conversion between the two is non-trivial (especially as no documentation
 of the internal structure of BouncyCastle's \texttt{BigInteger} exists).
 
-The safest way of converting from \texttt{System.Numerics.BigInteger} to \texttt{Org.BouncyCastle.Math.EC.BigInteger} is then to
+The safest way of converting from \texttt{System.Numerics.BigInteger} to \\
+\texttt{Org.BouncyCastle.Math.EC.BigInteger} is then to
 convert one to a string and get the other to parse said string. This conversion, to and from string, is expected to be very slow.\footnote{The
 actual impact on performance is investigated in Section \ref{sec:performance_components}.}
 
