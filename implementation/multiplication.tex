@@ -18,7 +18,10 @@ The possibility for changing a multiplier (and hence a multiplication algorithm)
 performing the simple arithmetic both encourages such improvements, and enables performance comparisons of multiplication
 algorithm candidates.
 
-\textbf{Note: Some curves have tricks - like the montgomery ladder, which trades time for precomputed space. How can these
-be implemented? Should the multiplier be set on a per-class basis instead of "for all points" once these are supported? Probably, yes.}
+Some types of curves have specific methods for multiplication that are only applicable to that exact type of curve. For
+example, Montgomery curves can take advantage of the \emph{Montgomery ladder} method, which significantly improves
+performance.\cite{safecurves}
 
-\textbf{Note: Point multiplication is covered in Hankerson pp. 95-?}
+As such methods exist, setting a multiplier for \emph{all} points (no matter if they belong to Montogmery, Edwards, or
+Weierstrass curves) does not seem a smart move. The design should be altered in future revisions to take this into account,
+setting the multiplier on a per-curve-type basis.
