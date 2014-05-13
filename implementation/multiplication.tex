@@ -2,25 +2,16 @@
 \label{sec:implementation_multipliers}
 \label{sec:implementation_multiplication}
 
-\textbf{Note: Change this. Cover Double-And-Add and FpNaf. Explain why FpNaf is a thing. This should probably be done 
-in the maths section.}
+While the simple arithmetic (addition, negation) of a point depends on its curve, algorithms for speeding up scalar
+multiplication of points are often independent of the type of curve. For example, the Double-and-Add algorithm can
+be applied to a point on any type of curve and result in exactly the same speed-up in computation time (compared to
+naively adding a point continuously to an accumulator).
 
-Note: Write here about using a "multiplier" to allow easy swapping between different multiplication algorithms.
+The possibility for changing a multiplier (and hence a multiplication algorithm) without having to change the code
+performing the simple arithmetic both encourages such improvements, and enables performance comparisons of multiplication
+algorithm candidates.
 
-Note: get sources! (Hankerson?)
+\textbf{Note: Some curves have tricks - like the montgomery ladder, which trades time for precomputed space. How can these
+be implemented? Should the multiplier be set on a per-class basis instead of "for all points"?}
 
-Note: Consider moving the Multiplication section to an appendix --- is it relevant enough to go in the report?
-
-The multiplication \(dP\) where \(d\) is an integer and \(P\) is a point occurs very often in ECC. Multiplication
-is easy to do in a naive and very slow way. The simplest is simply adding the point to itself until the result is
-reached:
-
-This, however, is horribly slow. Fortunately there are several ways to speed it up.
-
-Note: Point multiplication is covered in Hankerson pp. 95-?
-
-\paragraph{Double-and-Add}
-
-Double-and-Add takes advantage of the fact that doubling an integer is just adding it to itself. Addition is easy,
-and taking advantage of this, multiplication can be achieved with much fewer additions. The idea is to double the
-result if the remaining number of multiplications is even, and simply adding the original value if it is not.
+\textbf{Note: Point multiplication is covered in Hankerson pp. 95-?}
