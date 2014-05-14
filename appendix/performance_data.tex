@@ -42,11 +42,13 @@ Samples collected in significant function calls:
 
 \subsection{Figure data}
 
-Data aggregated for figures:
+Data aggregated for figures (all in \# inclusive samples):
 
 \begin{tabular}{|l|r|r|}
 	\hline
-	\textbf{Time spent in encoder v encryptor} \\
+    \multicolumn{3}{|l|}{} \\
+	\multicolumn{3}{|l|}{\textbf{Time spent in encoder v encryptor}} \\
+    \hline
 	& \textbf{Encrypt} & \textbf{Decrypt} \\
 	Encoder & 20 & 0 \\
 	Encryptor & 359 & 161 \\
@@ -55,12 +57,14 @@ Data aggregated for figures:
 
 \begin{tabular}{|l|r|}
 	\hline
-	& \textbf{Relative CPU Time Spent in Point Multiplication} \\
+    \multicolumn{2}{|l|}{} \\
+	\multicolumn{2}{|l|}{\textbf{Relative CPU Time Spent in Point Multiplication}} \\
+    \hline
 	Adding & 701 \\
 	Negating & 6 \\
 	Other & 15 \\
 	\hline
-	& \textbf{CPU Time (of total) Spent in Point Multiplication} \\
+	\multicolumn{2}{|l|}{\textbf{CPU Time (of total) Spent in Point Multiplication}} \\
 	Point Multiplication & 722 \\
 	Other & 70 \\
 	\hline
@@ -68,7 +72,9 @@ Data aggregated for figures:
 
 \begin{tabular}{|l|r|}
 	\hline
-	& \textbf{CPU Time (of total) Spent on Finite Field Operations} \\
+    \multicolumn{2}{|l|}{} \\
+	\multicolumn{2}{|l|}{\textbf{CPU Time (of total) Spent on Finite Field Operations}} \\
+    \hline
 	Finite Field Multiply & 50 \\
 	Finite Field Sqrt & 12 \\
 	Finite Field DivideBy & 512 \\
@@ -78,7 +84,9 @@ Data aggregated for figures:
 
 \begin{tabular}{|l|r|}
 	\hline
-	& \textbf{CPU Time (of total) Spent in BigInteger Conversion} \\
+    \multicolumn{2}{|l|}{} \\
+	\multicolumn{2}{|l|}{\textbf{CPU Time (of total) Spent in BigInteger Conversion}} \\
+    \hline
 	BigInteger Conversion & 37 \\
 	Other & 755 \\
 	\hline
