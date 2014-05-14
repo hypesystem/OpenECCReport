@@ -46,7 +46,7 @@ encryption using OpenECC.
 	\label{fig:profiler-code}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.70\textwidth]{performance/top-level--relative-time}
 	\caption{Relative time consumption between the top level concepts: curve preparation, key generation, encryption, and decryption.}
@@ -84,9 +84,11 @@ total computation time is spent doing point multiplications.
 Of the time spent in point multiplication, a vast majority is spent in addition, an almost none of the time is spent in negation. This
 is to be expected, as multiplication consists mostly of additions in some form or other.
 
-\textbf{Note: Conclude on this. What should be optimized? Well -- we don't know. It could be:
-A curve that has more efficient addition?
-A multiplier that has more efficient addition (or a curve that allows for such a multiplier? even a multiplier with pre-computation?)?}
+A lot of additions are being performed. One way to lower the number of additions, and hence the time spent computing multiplications, is
+using a different multiplication algorithm.
+
+An alternative would be implementing a different type of curve (such as a Montgomery curve) which allows for a greater level of precomputation
+(such as with the Montgomery ladder), and hence better performance.
 
 \subsubsection{Finite Field Operations}
 \label{sec:performance_components_finitefield}
@@ -111,7 +113,7 @@ The conversion between BouncyCastle's and C\#'s native \texttt{BigInteger}s uses
 The overall computation time spent doing just this is around \(5\%\) (see Figure \ref{fig:biginteger-performance})! Without this conversion,
 the full runtime of encrypting ``Hello, World.'' would take \(606 \text{ ms}\) (\(30 \text{ ms}\) faster).
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{performance/biginteger-conversion--relative-time}
 	\caption{A decent amount of time (\(4.7\%\)) is spent on handling \texttt{BigInteger} conversions, to and from BouncyCastle's representation.
