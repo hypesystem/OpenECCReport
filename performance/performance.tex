@@ -7,19 +7,39 @@
 Note: Where in the program is time spent? How much time does each thing take? (BigInteger conversion is probably
 a time-stealer!!!)
 
-Write a timemanager class and Timed* Wrappers of everything, so the constructs can be measured:
+Note: Introduction to performance using the Visual Studio Profiling Tools. Appendix with raw data.
 
-\begin{verbatim}
-class TimedEncryptor {
-  public TimedEncryptor(IEncryptor end) {...}
-  public Ciphertext Encrypt(...) {
-    StartTimer
-    var result = enc.Encrypt(...);
-    RecordTime
-    return result;
-  }
-}
-\end{verbatim}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.70\textwidth]{performance/top-level--relative-time}
+\end{figure}
+
+Note: Introduce areas that will be investigated. Also mention that encryption is the heaviest load (above, introductory graph). Mention
+that a negligible amount of time is spent encoding and decoding (compared to encryption and decryption) -- no graph needed.
+
+\subsubsection{Point Multiplication}
+\label{sec:performance_components_multiplication}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1\textwidth]{performance/point-multiplication--relative-time}
+\end{figure}
+
+\subsubsection{Finite Field Operations}
+\label{sec:performance_components_finitefield}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{performance/finite-field--relative-time}
+\end{figure}
+
+\subsubsection{BigInteger Conversion}
+\label{sec:performance_components_biginteger}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{performance/biginteger-conversion--relative-time}
+\end{figure}
 
 \subsection{BouncyCastle Comparison}
 \label{sec:performance_bouncycastle}

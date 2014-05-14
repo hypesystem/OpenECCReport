@@ -17,7 +17,7 @@ to and from string, is expected to be slow.
 BouncyCastle's \verb+BigInteger.ToString+ method has a comment (in the source code) stating that ``[this] is algorithm 1a from chapter
 4.4 in Seminumerical Algorithms, \textbf{slow but it works}'' (emphasis added). Avoiding any calls to this method drastically improved
 performance. Having to convert integers from one representation to another fairly often is still expected to incur a performance
-penalty.\footnote{The actual impact on performance is investigated in Section \ref{sec:performance_components}.}
+penalty.\footnote{The actual impact on performance is investigated in Section \ref{sec:performance_components_biginteger}.}
 
 \begin{figure}[htb]
 	\centering
