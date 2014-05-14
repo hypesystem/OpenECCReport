@@ -1,0 +1,88 @@
+\section{Component Performance Data}
+\label{app:component-performance-data}
+
+\subsection{Data}
+
+Samples collected in significant function calls:
+
+\begin{tabular}{|l|r|r|r|}
+	\hline
+	& \textbf{Inclusive} && \\
+	& \textbf{Samples} & \% of parent & \% of total \\
+	\hline
+	\textbf{Total} & \textbf{792} && \\
+	\hline
+	&&& \\
+	\textbf{Top-level abstractions} &&& \\
+	CurveFactory.secp256k1 & 37 && 4.67 \\
+	GenerateKeys & 215 && 27.15 \\
+	Encrypt & 379 && 47.85 \\
+	\emph{--- Encode} & 20 & 5.28 & 2.53 \\
+	Decrypt & 161 && 20.33 \\
+	\emph{--- Decode} & 0 & 0 & 0 \\
+	\hline
+	&&& \\
+	\textbf{EC-level abstractions} &&& \\
+	Point.Multiply & 722 && 91.16 \\
+	Point.Add & 701 && 88.51 \\
+	Point.Negate & 6 && 0.76 \\
+	\hline
+	&&& \\
+	\textbf{Finite Field-level abstractions} &&& \\
+	FiniteFieldElement.Multiply & 50 && 6.31 \\
+	FiniteFieldElement.Sqrt & 12 && 1.52 \\
+	FiniteFieldElement.DivideBy & 512 && 64.65 \\
+	\hline
+	&&& \\
+	\textbf{BigInteger conversion} &&& \\
+	Native.BigInteger.ToBC & 24 && 3.03 \\
+	BC.BigInteger.ToNative & 13 && 1.64 \\
+	\hline
+\end{tabular}
+
+\subsection{Figure data}
+
+Data aggregated for figures:
+
+\begin{tabular}{|l|r|r|}
+	\hline
+	\textbf{Time spent in encoder v encryptor} \\
+	& \textbf{Encrypt} & \textbf{Decrypt} \\
+	Encoder & 20 & 0 \\
+	Encryptor & 359 & 161 \\
+	\hline
+\end{tabular}
+
+\begin{tabular}{|l|r|}
+	\hline
+	& \textbf{Relative CPU Time Spent in Point Multiplication} \\
+	Adding & 701 \\
+	Negating & 6 \\
+	Other & 15 \\
+	\hline
+	& \textbf{CPU Time (of total) Spent in Point Multiplication} \\
+	Point Multiplication & 722 \\
+	Other & 70 \\
+	\hline
+\end{tabular}
+
+\begin{tabular}{|l|r|}
+	\hline
+	& \textbf{CPU Time (of total) Spent on Finite Field Operations} \\
+	Finite Field Multiply & 50 \\
+	Finite Field Sqrt & 12 \\
+	Finite Field DivideBy & 512 \\
+	Other & 218 \\
+	\hline
+\end{tabular}
+
+\begin{tabular}{|l|r|}
+	\hline
+	& \textbf{CPU Time (of total) Spent in BigInteger Conversion} \\
+	BigInteger Conversion & 37 \\
+	Other & 755 \\
+	\hline
+\end{tabular}
+
+\section{Bouncy Castle Performance Comparison Data}
+\label{app:bc-performance-data}
