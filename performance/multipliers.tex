@@ -1,11 +1,27 @@
 \subsection{Multiplier Comparison}
 
-\textbf{Note: Several multipliers exist: DoubleAndAdd, NAF, wNAF. DoubleAndAdd has been implemented both in a recursive form
-and a binary form. The binary is faster.}
+With the different multiplication algorithms, there is an underlying assumption regarding their performance. The more
+advanced algorithms use fewer additions, which should - in theory - be quicker. However, there might be other things
+to take into account, such as pre-computations and other overhead.
+
+
+
+To determine which algorithm is actually the fastest for use in OpenECC, all of them are tested. The test performs a
+full  encryption of the string \verb+"Hello, World."+ (involving all layers of the software). A hundred tests are run
+per algorithm, and the average time spent is recorded.
+
+Most of the algorithms do not have modifiable parameters, but the wNAF algorithm has a variable window size \(w\). For
+this reason, the wNAF algorithm has been tested with a variety of window sizes, to determine which is the best.
+
+The Double-and-Add algorithm has been implemented in both a recursive fashion (where it repeatedly calls itself, causing
+overhead), and a binary-based version (where there is a slight overhead involved with finding the binary representation
+of the number).
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=\textwidth]{performance/multipliers-comparison}
-	\caption{holla at me, gals}
+	\caption{Comparison of differnt multiplication algorithms. wNAF with a window size of 3 is the fastest on average,
+		having run each algorithm 100 times. Using \(wNAF_3\), full encryption of the string \texttt{"Hello, World."}
+		takes an average of \(491 \text{ ms}\).}
 	\label{fig:multipliers-comparison}
 \end{figure}

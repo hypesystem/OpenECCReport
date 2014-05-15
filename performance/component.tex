@@ -111,7 +111,7 @@ on finite field elements, which is likely the slowest operation of the addition.
 
 The conversion between BouncyCastle's and C\#'s native \texttt{BigInteger}s uses string conversion and parsing, which is expected to be slow.
 The overall computation time spent doing just this is around \(5\%\) (see Figure \ref{fig:biginteger-performance})! Without this conversion,
-the full runtime of encrypting ``Hello, World.'' would take \(606 \text{ ms}\) (\(30 \text{ ms}\) faster).
+the full runtime of encrypting ``Hello, World.'' would take \(466 \text{ ms}\) (\(25 \text{ ms}\) faster).
 
 \begin{figure}[htb!]
 	\centering
