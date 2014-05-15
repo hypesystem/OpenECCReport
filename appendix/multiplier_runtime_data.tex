@@ -1,2 +1,25 @@
 \section{Comparison of Multipliers}
 
+Data from comparison of multipliers (scalar point multiplication algorithms). All times are in
+milliseconds (ms).
+
+\begin{figure}[h!]
+	\begin{tabular}{|l|r|r|r|r|}
+		\hline
+		\textbf{Algorithm} &
+		\multicolumn{1}{|l|}{\textbf{Setup}} &
+		\multicolumn{1}{|l|}{\textbf{Encryption}} &
+		\multicolumn{1}{|l|}{\textbf{Decryption}} &
+		\multicolumn{1}{|l|}{\textbf{Total Runtime}} \\
+		\hline
+		\textbf{DoubleAndAddRecursive} & 165 & 337 & 164 & 666 \\
+		\textbf{DoubleAndAddBinary} & 141 & 291 & 141 & 573 \\
+		\textbf{NAF} & 166 & 338 & 166 & 670 \\
+		\textbf{wNAF, w=2} & 129 & 266 & 130 & 525 \\
+		\textbf{wNAF, w=3} & 120 & 250 & 121 & 491 \\
+		\textbf{wNAF, w=4} & 127 & 263 & 127 & 517 \\
+		\textbf{wNAF, w=5} & 127 & 264 & 128 & 519 \\
+		\textbf{wNAF, w=6} & 148 & 304 & 148 & 600 \\
+		\hline
+	\end{tabular}
+\end{figure}

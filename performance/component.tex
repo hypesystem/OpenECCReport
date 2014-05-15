@@ -17,7 +17,7 @@ such as encryption, decryption, key generation, and curve preparation, on lower 
 spent on each concept, a small program was written (see Figure \ref{fig:profiler-code}), constructing the entire stack required for
 encryption using OpenECC.
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
 	\centering
 	\begin{tabular}{|p{\textwidth}|}
 		\hline
@@ -73,7 +73,7 @@ It is an oft repeated fact that elliptic curve applications spend most of their 
 majority of the time being spent here, and indeed that is what we find (Figure \ref{fig:point-multiplication-performance}). \(91.2\%\) of
 total computation time is spent doing point multiplications.
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
 	\centering
 	\includegraphics[width=1\textwidth]{performance/point-multiplication--relative-time}
 	\caption{Fraction of total computation time spent on point multiplications (left) and the underlying operations performed in point
@@ -97,7 +97,7 @@ While on the point level most of the time is spent doing multiplications, the mo
 (\(89.2\%\), see Figure \ref{fig:finite-field-performance}). Point addition for Weierstrass curves performs a single division operation
 on finite field elements, which is likely the slowest operation of the addition.
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{performance/finite-field--relative-time}
 	\caption{Time spent on finite field operations amounts to a total of \(72\%\) of total processing time. The rest of the time (notice the
