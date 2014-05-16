@@ -5,15 +5,14 @@ advanced algorithms use fewer additions, which should - in theory - be quicker. 
 to take into account, such as pre-computations and other overhead.
 
 To determine which algorithm is actually the fastest for use in OpenECC, all of them are tested. The test performs a
-full  encryption of the string \verb+"Hello, World."+ (involving all layers of the software). A hundred tests are run
-per algorithm, and the average time spent is recorded.
+full  encryption of a string, involving all layers of the software. A hundred tests are run
+per algorithm, and the average time spent is recorded. The tests are run on a computer with an Intel Core i3 processor.
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=\textwidth]{performance/multipliers-comparison}
 	\caption{Comparison of differnt multiplication algorithms. wNAF with a window size of 3 is the fastest on average,
-		having run each algorithm 100 times. Using \(wNAF_3\), full encryption of the string \texttt{"Hello, World."}
-		takes an average of \(491 \text{ ms}\).}
+		having run each algorithm 100 times.}
 	\label{fig:multipliers-comparison}
 \end{figure}
 
@@ -24,6 +23,7 @@ The Double-and-Add algorithm has been implemented in both a recursive fashion (w
 overhead), and a binary-based version (where there is a slight overhead involved with finding the binary representation
 of the number).
 
-\(wNAF_3\) is found to be the fastest of the algorithms, and is selected as the default multiplier for all points. It is
+\(wNAF_3\) is found to be the fastest of the algorithms (full encryption of the string \texttt{"Hello, World."} takes an
+average of \(491 \text{ ms}\).), and is selected as the default multiplier for all points. It is
 interesting to note that the NAF algorithm is slower than Double-and-Add algorithm (as fewer additions should theoretically
 be performed), which is probably to the overhead of creating the NAF form.

@@ -1,15 +1,14 @@
 \section{Performance}
 \label{sec:performance}
 
- --- introduction ---
- 
  \textbf{Note: Answer the introduction's claims? Talk about why performance is measured, what the goal is with measuring the
  performance.}
  
- \textbf{Note: Mention the total running time of encryption 491 ms (with computer specs Intel Core i3)}
+ Several algorithms for scalar point multiplication were implemented. To determine which of these is the most efficient,
+ and should used per default, they must be compared.
  
- In order to judge the performance of OpenECC, and with it the mathematical constructs used, an analysis of each of the
- individual underlying components is fitting: This analysis will help to figure out where performance bottlenecks (if
+ The performance of OpenECC, in its whole, can be judged by an analysis of each of the
+ individual underlying components. This analysis will help to figure out where performance bottlenecks (if
  any) exist, and what constructs (curves, multipliers, encoders or encryptors) should be improved.
 
 \input{performance/multipliers}
