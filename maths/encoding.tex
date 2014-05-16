@@ -2,7 +2,8 @@
 \label{sec:math_encoding}
 
 Some elliptic curve based cryptosystems (such as the adapted ElGamal in Section \ref{sec:math_encryption}) are constructed to encrypt points on a curve. To make
-this useful an original string message must be encoded as a point. The encoding must be reversible.
+this useful an original string message must be encoded as a point. The encoding must be reversible and have a one-to-one relationship between encoded and raw
+messages.
 
 It is trivial to map a message string to the correct numberspace as both strings and numbers have binary representations. The number is then
 simply found by converting a string to its binary representation and interpreting this as an integer. Using the ASCII character set the string
@@ -25,7 +26,7 @@ can be mapped to a point \(M\) on the curve:
 	M = (x_j, y_j) \text{, where } y_j = \sqrt{z_j} \text{ mod } p
 \end{equation}
 
-If no square root exists for \(z_j\) for all \(j\), \(j = 0 \text{ to } K-1\), then it is not possible to map the message to a point. In other
+If no square root exists for \(z_j\) for all \(j \in \{0,1,...,K-1\}\), then it is not possible to map the message to a point. In other
 words, the method is probablistic and it is possible that a message cannot be encoded.
 
 To find the original message from a point again, a simple calculcation is performed:
@@ -41,14 +42,14 @@ length of the message. The numeric value of a string can be no greater than \(p\
 
 \paragraph{Picking the value K}
 
-The selection of value \(K\) has implications on both the probability that a message can be mapped, and the performance of the encoding algoirthm.
+The selection of value \(K\) has implications on both the probability that a message can be mapped, and the performance of the encoding algorithm.
 The probability of successful encoding is described as \(P_{success} \geq 1 - {1 \over {2^K}}\): the larger the value of \(K\), the greater the probability,
 as shown in Figure \ref{fig:probability}. With \(K\) greater than 6, no discernible change in probability occurs.\cite{MappingAMessage}
 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.6\textwidth]{maths/encoding-probability}
-	\caption{Minimum probability of successful encoding, depending on size of K.}
+	\caption{Minimum probability of successful encoding, depending on size of K: \(P_{success} \geq 1 - {1 \over {2^K}}\).}
 	\label{fig:probability}
 \end{figure}
 
@@ -58,5 +59,10 @@ is performed only once, the last two (2,3) are repeated until a root is found, o
 
 Multiplication is a heavy operation, and picking a smaller value of \(K\) limits both the load of each multiplications (as they are performed with
 smaller numbers), and the number of multiplications (as the range of \(j\)s used is limited by \(K - 1\)). So while it is easy to find the greatest
-possible value \(K_greatest = {\lfloor { p \over {MK} }\rfloor}\), yielding the highest probability of success, this is not necessarily desirable.
-Picking \(K = 7\) gives a probability of success \(P_{success} \geq 0.993\) -- high enough for our purposes.
+possible value \(K_{greatest} = {\lfloor { p \over {M + 1} }\rfloor}\) yielding the highest probability of success, this is not necessarily desirable.
+
+For example, the curve \emph{secp256k1} has a prime that can be approximated as \(p_{secp256k1} \simeq 1.16*10^{77}\).\cite{safecurves} An M can be
+found from a message of a reasonably short length: \(M = \mathtt{string\_to\_integer(``Hello, World.'')} \simeq 3.68*10^{30}\). This would lead to
+\(K_{greatest} \simeq {\lfloor { {1.16*10^{77}} \over {3.68*10^{30} + 1}} \rfloor} = 3.15*10^{46}\), which would lead to a huge amount of multiplications.
+
+Picking \(K = 7\) gives a probability of success \(P_{success} \geq 0.993\), leaving less than a \(0.7\%\) failure rate.

@@ -5,24 +5,24 @@ on the difficulty of computing discrete logarithms. It allows messages to be sen
 \(A\) to a recipient \(B\) to be encrypted in such a way that only \(B\) can decrypt them.
 
 The sender and recipient agree on a common finite field (over a large prime \(p\)) to work in,
-and use the same generator \(g\) for that field. \(B\) generates a secret key \(d_B\) and a public
-key \(q_B = g^{d_B}\). The public key is distributed to the sender. Given a message \(m\), the
-sender can now construct a ciphertext \(c\) from a randomly selected \(k\):\cite{elgamal}
+and use the same generator \(g\). \(B\) randomly selects a secret key \(d_B\) and generates a
+public key \(q_B = g^{d_B}\). The public key is distributed to the sender. Given a message \(m\),
+\(A\) can now construct a ciphertext \(c\) from a randomly selected \(k\):\cite{elgamal}
 
 \begin{equation}
-	c = (c_1, c_2)  \textbf{ where }  c_1 = g^k \land c_2 = m * q_B^k
+	c = (c_1, c_2)  \textbf{ where }  c_1 = g^k \land c_2 = m q_B^k
 \end{equation}
 
 \(B\) can find \(q_B^k\) by using \(c_1\) and his own secret key:
 
 \begin{equation}
-	q_B^k = g^{d_B*k} = c_1^{d_B}
+	q_B^k = g^{d_B k} = c_1^{d_B}
 \end{equation}
 
 Finding the original message \(m\) is then as simple as:
 
 \begin{equation}
-    m = c_2 \over q_B^k
+    m = {c_2 \over c_1^{d_B}}
 \end{equation}
 
 \paragraph{Adapting to Elliptic Curves}
@@ -33,25 +33,25 @@ logarithm cryptographic schemes.''\cite{hankerson2010}} The sender \(A\) and rec
 (over a finite field \(\mathbb{F}_p\)) and a generator point \(G\). The prime order \(n\) of \(G\) must also be
 known.
 
-The order \(n\) of \(G\) is a number such that \(nG = \infty\), and is used to describe the cyclic subgroup
-\(\langle G \rangle = \{ \infty, G, 2G, ..., (n-1)G \} \). For a generator, this cyclic subgroup will contain
-all of the points on the curve.
+The order \(n\) of \(G\) is a number such that \(nG = O_{\infty}\) (the point at infinity), and is used to describe
+the cyclic subgroup \(\langle G \rangle = \{ \infty, G, 2G, ..., (n-1)G \} \). For a generator, this cyclic subgroup
+will contain all of the points on the curve.
 
-The recipient then computes a public key \(Q_B = d_B * P\) (a point) from a randomly selected secret key
+The recipient then computes a public key \(Q_B = d_B G\) (a point) from a randomly selected secret key
 \(d_B \in_R [1,n-1]\) (an integer), and distributes the public key to the sender. \(A\) can now encrypt
 a plaintext \(m\), encoded as a point \(M\) on the curve, in such a way that only \(B\) can decrypt
-it. This is done by selecting a random \(k \in_R [1,n-1]\) and the computing the ciphertext \(c\), a
+it. This is done by selecting a random \(k \in_R [1,n-1]\) and computing the ciphertext \(c\), a
 tuple of two points (notice how the exponentiation of traditional ElGamal has been replaced with scalar
 multiplication of points):
 
 \begin{equation}
-	c = (C_1, C_2)  \textbf{ where }  C_1 = kP \land C_2 = M+kQ_B
+	c = (C_1, C_2)  \textbf{ where }  C_1 = kG \land C_2 = M+kQ_B
 \end{equation}
 
-The recipient can now decrypt the message by using his secret key, \(d_B\), as \(kQ_B = kd_BP\):
+The recipient can now decrypt the message by using his secret key, \(d_B\), as \(kQ_B = kd_BG\):
 
 \begin{equation}
-	M = M + k Q_B - k d_B P = C_2 - d_B C_1
+	M = M + k Q_B - k d_B G = C_2 - d_B C_1
 \end{equation}
 
 The original plaintext point can now safely be decoded to the original plaintext message.\cite{hankerson2010}

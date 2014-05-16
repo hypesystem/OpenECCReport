@@ -1,4 +1,4 @@
-\section{Mathematical Foundation}
+\section{Mathematical Foundation \& Algorithms}
 
 There are several distinct mathematical constructs required for building a working encryption scheme using Elliptic
 Curve Cryptography. Elliptic curve arithmetic is a subset of finite field arithmetic, but as the latter is outside
@@ -6,7 +6,7 @@ of the scope of this project, an external source was used (see Section \ref{sec:
 the mathematics underlying finite fields will not be discussed here.
 
 Conceptually, the addition of two points, \(P + Q = R\), is done by drawing a line through the points, \(P\) and \(Q\),
-and finding the point \(-R)\), where the line intersects the curve again. This point is
+and finding the point \(-R\), where the line intersects the curve again. This point is
 then reflected over the x-axis to find \(R\), the result.
 
 The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
@@ -20,8 +20,8 @@ with the curve, and the result \(R\), is found by reflecting \(-R\).\cite{hanker
 	\caption{Conceptual addition (left) and doubling (right) of points on elliptic curves.}
 \end{figure}
 
-In the following, the mathematical constructs required for encryption are shown: artihmetic with points on the simplest
-form of curves (the Weierstrass simple form, Section \ref{sec:math_curve}), probablistic encoding of a string message
+In the following, the mathematical constructs required for encryption are shown: arithmetic with points on the simplest
+form of curves (the Weierstrass simple form, Section \ref{sec:math_curve}), probabilistic encoding of a string message
 to a point on a given curve (Section \ref{sec:math_encoding}), and encryption of a point on a curve (using a version
 of the ElGamal public key encryption scheme that has been adapted to elliptic curves, Section \ref{sec:math_encryption}).
 
