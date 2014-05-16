@@ -46,12 +46,27 @@ As with addition, negation is complicated by the existence of the infinity point
 
 The negation of infinity is infinity (negative infinity does not exist), and a point subtracted from itself is infinity.\cite{hankerson2010}
 
-\subsection{Scalar Multiplication}
+\subsubsection{Scalar Multiplication}
 
-Scalar multiplication of a point \(P\) and an integer \(d\) is calculated through repeated addition of the point to an accumulator.
-Several algorithms to speed up this process exist. Multiplication is the slowest operation performed in ECC, and its performance should
-be considered carefully.\footnote{The DoubleAndAdd method limits the number of additions necessary by doubling the accumulating result
-whenever possible, instead of naively adding \(P\); \textbf{Note: Explain FpNaf...}. Both of these methods are supported in OpenECC, and
-the implementation can easily be extended with more multiplication algorithms (see Section \ref{sec:implementation_multipliers}).}
+Scalar multiplication of a point \(P\) and an integer \(d\) is, with the most simple algorithm, calculated through repeated addition
+of the point to an accumulator. Several algorithms to speed up this process exist, and as point multiplication is most computational
+time is spent\footnote{\textbf{Note: cite?}} a few are covered in the following: \emph{Double-and-Add}, \emph{NAF}, and \emph{wNAF}.
 
-\textbf{Note: Bump-up this footnote to a full-fletched section. Write about: double and add, NAF and wNAF.}
+\paragraph{Double-and-Add}
+
+The DoubleAndAdd method limits the number of additions necessary by doubling the accumulating result whenever possible, resulting in
+fewer total additions. The algorithm relies on first representing the number \(d\) in its binary form, \textbf{Note: bin form here}.
+Each bit is then inspected, from least significant (right) to most significant (left): if the bit is \(1\), the current value of \(P\)
+is added to the accumulator. For each bit inspected, \(P\) is doubled.
+
+\textbf{Note: Algorithm}
+
+\textbf{This results in... (\# additions), fewer than naive \# additions}
+
+\paragraph{Non-adjacent form, NAF}
+
+\textbf{Note: Write this}
+
+\paragraph{windowed-NAF}
+
+\textbf{Note: introduce wNAF\_3 as syntax for wNAF with width 3.}
