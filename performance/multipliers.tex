@@ -24,4 +24,6 @@ The Double-and-Add algorithm has been implemented in both a recursive fashion (w
 overhead), and a binary-based version (where there is a slight overhead involved with finding the binary representation
 of the number).
 
-\(wNAF_3\) is found to be the fastest of the algorithms, and is selected as the default multiplier for all points.
+\(wNAF_3\) is found to be the fastest of the algorithms, and is selected as the default multiplier for all points. It is
+interesting to note that the NAF algorithm is slower than Double-and-Add algorithm (as fewer additions should theoretically
+be performed), which is probably to the overhead of creating the NAF form.

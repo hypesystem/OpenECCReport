@@ -50,23 +50,132 @@ The negation of infinity is infinity (negative infinity does not exist), and a p
 
 Scalar multiplication of a point \(P\) and an integer \(d\) is, with the most simple algorithm, calculated through repeated addition
 of the point to an accumulator. Several algorithms to speed up this process exist, and as point multiplication is most computational
-time is spent\footnote{\textbf{Note: cite?}} a few are covered in the following: \emph{Double-and-Add}, \emph{NAF}, and \emph{wNAF}.
+time is spent\footnote{See Section \ref{sec:performance_components} for a confirmation of this.} a few are covered in the following:
+\emph{Double-and-Add}, \emph{NAF}, and \emph{wNAF}.
 
 \paragraph{Double-and-Add}
 
 The DoubleAndAdd method limits the number of additions necessary by doubling the accumulating result whenever possible, resulting in
-fewer total additions. The algorithm relies on first representing the number \(d\) in its binary form, \textbf{Note: bin form here}.
-Each bit is then inspected, from least significant (right) to most significant (left): if the bit is \(1\), the current value of \(P\)
-is added to the accumulator. For each bit inspected, \(P\) is doubled.
+fewer total additions.
 
-\textbf{Note: Algorithm}
+The algorithm relies on first representing the number \(d\) in its binary form, \(d_{binary} = (d_{t-1}, ... , d_2, d_1, d_0)_2\),
+where \(t\) is the number of bits used to represent the number. Each bit is then inspected, from least significant (right) to most
+significant (left): if the bit is \(1\), the current value of \(P\) is added to the accumulator. For each bit inspected, \(P\) is
+doubled.\cite{hankerson2010}
 
-\textbf{This results in... (\# additions), fewer than naive \# additions}
+This algorithm results in \(~1.5t\) additions (most of which are doublings), much less than the \(~0.5t^2\) additions required for
+repeatedly adding the point to an accumulator.
 
-\paragraph{Non-adjacent form, NAF}
+\paragraph{Non-adjacent form}
 
-\textbf{Note: Write this}
+Whereas the binary form of a number is constructed from \(\{0,1\}\), the non-adjacent form (NAF) is constructed from \(\{-1,0,1\}\), with
+the added limitation that no non-zero values are adjacent (hence the name). Subtraction of points is (almost) as efficient as addition,
+requiring only an additional negation of a finite field element (see above).
 
-\paragraph{windowed-NAF}
+The NAF of a number \(d\) can be constructed by an algorithm, which finds each digit as \(d_i = 2 - (d \text{ mod } 4)\) if \(d\) is odd, and
+\(0\) otherwise. \(d\) is then reduced by \(d_i\) and halved, before the algorithm repeats for the next value. This continues until \(d < 1\).
 
-\textbf{Note: introduce wNAF\_3 as syntax for wNAF with width 3.}
+The multiplication \(dP\) can be calculated using the \(NAF(d)\) with an appropriate algorithm (see Figure \ref{fig:naf-algorithm}).\cite{hankerson2010}
+
+\begin{figure}[htb!]
+	\centering
+	\begin{tabular}{|p{\textwidth}|}
+		\hline
+		Input: Positive integer \(k\), \(P \in E(\mathbb{F}_q)\). \\
+		Output: \(kP\).
+
+		\begin{enumerate*}
+			\item Compute \(NAF(k) = \Sigma^{l-1}_{i=0} k_i2^i\).
+			\item \(Q \gets \infty\).
+			\item For \(i\) from \(l-1\) downto \(0\) do
+			\begin{enumerate*}
+				\item \(Q \gets 2Q\).
+				\item If \(k_i = 1\) then \(Q \gets Q + P\).
+				\item If \(k_1 = -1\) then \(Q \gets Q - P\).
+			\end{enumerate*}
+			\item Return(\(Q\)).
+		\end{enumerate*}
+		\\
+		\hline
+	\end{tabular}
+	\caption{The algorithm for computing the scalar multiplication \(kP\) using the non-adjacent form of \(k\), as represented by
+		Hankerson et.al.\cite{hankerson2010}}
+	\label{fig:naf-algorithm}
+\end{figure}
+
+The running time for the NAF algorithm is approximately \(1 {1 \over 3} l\), where \(l\) is the length of the NAF, quicker than that
+of the Double-and-Add.\cite{hankerson2010}
+
+\paragraph{Windowed NAF}
+
+The NAF can be improved further by allowing a wider range of values than just those in \(\{-1,0,1\}\). The range is called a \emph{window}, and
+using this windowed non-adjacent form (wNAF) can improve running time, but requires some pre-computation. Regular \(NAF\) is the same
+as \(wNAF_2\) (a window size of 2), and \(wNAF_3\) would be constructed from the values \(\{-3,-1,0,1,3\}\).
+
+The wNAF of an integer is calculated in much the same way as a NAF, but with some added complexity due to the variable size of \(w\)
+(see Figure \ref{fig:compute-wnaf-algorithm}).
+
+\begin{figure}[htb!]
+	\begin{tabular}{|p{\textwidth}|}
+		\hline
+		Input: Window width \(w\), positive integer \(k\). \\
+		Output: \(NAF_w(k)\).
+		\begin{enumerate*}
+			\item \(i \gets 0\).
+			\item While \(k \geq 1\) do
+			\begin{enumerate*}
+				\item If \(k\) is odd then: \(k_i \gets k \text{ mods } 2^w\), \(k \gets k - k_i\);
+				\item Else: \(k_i \gets 0\).
+				\item \(k \gets k/2\), \(i \gets i + 1\).
+			\end{enumerate*}
+			\item Return(\(k_{i-1},k_{i-2},...,k_1,k_0\)).
+		\end{enumerate*} \\
+		\hline
+		Where \(k \text{ mods } 2^w\) is: 
+		\begin{enumerate*}
+			\item If \(k \text{ mod } 2^w \geq 2^{w-1}\) then return(\((k \text{ mod } 2^w) - 2^w\));
+			\item Else return(\(k \text{ mod } 2^w\)).
+		\end{enumerate*} \\
+		\hline
+	\end{tabular}
+	\caption{The algorithm for constructing a wNAF representation of an integer \(k\), as represented by Hankerson
+		et.al.\cite{hankerson2010} Here with added explanation of \(k \text{ mods } 2^w\).}
+	\label{fig:compute-wnaf-algorithm}
+\end{figure}
+
+The wNAF multiplication algorithm relies on the precomputation of the values \(P_i = iP \text{ for } i \in \{1,3,5,...,2^{w-1}-1\}\). If the
+point \(P\) is fixed for many operations, then this precomputation may be worthwhile, even at big values for \(w\). For dynamically varying
+\(P\) (such as in asymmetric encryption) a large \(w\) may result in an overhead larger than the benefit of the quicker operations.
+
+The wNAF multiplication algorithm is very similar to that of the regular NAF, distinguishing itself by its precomputation and slightly more
+advanced structure for non-zero \(k_i\) (see Figure \ref{fig:wnaf-algorithm}).
+
+\begin{figure}[htb!]
+	\begin{tabular}{|p{\textwidth}|}
+		\hline
+		Input: Window width \(w\), positive integer \(k\), \(P \in E(\mathbb{F}_q)\).\\
+		Output: \(kP\).
+		\begin{enumerate*}
+			\item Compute \(wNAF_w(k) = \Sigma^{l-1}_{i=0} k_i 2^i\).
+			\item Compute \(P_i = iP\) for \(i \in \{1,3,5,...,2^{w-1}-1\}\).
+			\item \(Q \gets \infty\).
+			\item For \(i\) from \(l - 1\) downto \(0\) do
+			\begin{enumerate*}
+				\item \(Q \gets 2Q\).
+				\item If \(k_i \neq 0\) then:
+				\begin{enumerate*}
+					\item If \(k_i > 0\) then \(Q \gets Q + P_{k_i}\);
+					\item Else \(Q \gets Q - P_{-k_i}\).
+				\end{enumerate*}
+			\end{enumerate*}
+			\item Return(\(Q\)).
+		\end{enumerate*} \\
+		\hline
+	\end{tabular}
+	\caption{Algorithm for computing the multiplication \(kP\) using the wNAF algorithm, as represented by Hankerson et.al.\cite{hankerson2010}}
+	\label{fig:wnaf-algorithm}
+\end{figure}
+
+wNAF is a generalization of NAF, and so the formula for running time of wNAF is a generalization of the running time for NAF. The number of
+additions performed in wNAF depends on the window \(w\) and can be described as \(2^{w-2} + (1 + {1 \over {w + 1}}) l\), where \(l\) is the length
+of the wNAF form.
