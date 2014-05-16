@@ -23,11 +23,13 @@ form -- is used in cryptography (see Section \ref{sec:math_curve}):
 When using elliptic curves for cryptography, the curves are defined over a prime field \(\mathbb{F}_p\)
 of integers.
 
+\textbf{Note from Lorena: Define p}
+
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.37\textwidth]{introduction/secp256k1-graph}
 	\includegraphics[width=0.52\textwidth]{introduction/secp256k1-graph-over-field-p17}
-	\caption{The graph \(E: y^2 = x^3 + 0x + 7\) depicted left, and the same graph over the prime field
+	\caption{The curve \(E: y^2 = x^3 + 0x + 7\) depicted left, and the same curve over the prime field
 		\(\mathbb{F}_{17}\) depicted right.}
 	\label{fig:graphs}
 \end{figure}
@@ -40,8 +42,10 @@ defined as such: ``given an elliptic curve \(E\) defined over a finite field \(\
 Section \ref{sec:math_encryption}) is exactly that of the ECDLP, with the public key \(Q\) and private
 key \(l\).}\cite{hankerson2010}
 
+\textbf{Note from Lorena: Define \(\langle P \rangle\) and "order \(n\)".}
+
 \textbf{Note: Add something about patent problems (not many free implementations exist!) - which free
-implementations do exist?}
+implementations do exist? (SAGE in python is one possible, Bouncy Castle in Java and C\# another.)}
 
 \textbf{Note: Add paragraph on different types of curves (Weierstrass, Montgomery, Edwards).}
 
