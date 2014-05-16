@@ -10,7 +10,7 @@ time.
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.7\textwidth]{implementation/multipliers}
-	\caption{The relationship between points and multipliers. The multiplier is defined for all types of points (as it
+	\caption{The relationship between points and multipliers. The multiplier is defined for all types of points, as it
 		is set as a static property on the \texttt{Point} abstract class.}
 \end{figure}
 
@@ -22,6 +22,6 @@ Some types of curves have specific methods for multiplication that are only appl
 example, Montgomery curves can take advantage of the \emph{Montgomery ladder} method, which significantly improves
 performance.\cite{safecurves}
 
-As such methods exist, setting a multiplier for \emph{all} points (no matter if they belong to Montogmery, Edwards, or
+As such methods exist, setting a multiplier for \emph{all} points (no matter if they belong to Montgomery, Edwards, or
 Weierstrass curves) does not seem a smart move. The design should be altered in future revisions to take this into account,
 setting the multiplier on a per-curve-type basis.

@@ -1,7 +1,7 @@
 \subsection{Encryptors}
 
 Public-key encryption involves certain concepts: public and private keys, plain- and ciphertexts. In the adapted ElGamal encryption,
-a public key is a \verb+Point+s, a private key is a \verb+BigInteger+, and both plaintext and ciphertext are byte-strings. Many
+a public key is a \verb+Point+, a private key is a \verb+BigInteger+, and both plaintext and ciphertext are byte-strings. Many
 cryptographic implementations (BouncyCastle included) represent all of these concepts as such: their primitive representations.
 
 This practice, however, is not recommendable in an Object-Oriented implementation: Objects are concepts, and there is a very obvious
@@ -28,7 +28,7 @@ algorithms know about keys. Neither of these should know about byte-strings.
     \end{tabular}
 
     \caption{The OpenECC type of method signature makes the intention clear, whereas some confusion may exist with the alternative
-        (but more traiditional) version. For example, what is the point \(q\) -- or the integer \(d\) -- supposed to represent?}
+        (but more traditional) version. For example, what is the point \(q\) -- or the integer \(d\) -- supposed to represent?}
     \label{fig:encryptor_method_signatures}
 \end{figure}
 
