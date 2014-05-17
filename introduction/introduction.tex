@@ -51,13 +51,17 @@ The order \(n\) of \(P\) is a number such that \(nP = O_{\infty}\) (the point at
 the cyclic subgroup \(\langle G \rangle = \{ O_\infty, P, 2P, ..., (n-1)P \} \). For a generator, this cyclic subgroup
 will contain all of the points on the curve.
 
-
-\textbf{Note: Something about SafeCurves...}
+There are several other concerns than the ECDLP to be considered when evaluating the safety of using a curve. Bernstein and Lange
+provide an extensive list of requirements for the safety of curves, including indistinguishability from uniform random
+strings, and ``simple, fast, constant-time, single-coordinate single-scalar multiplication''. They also list a variety
+of curves, noting which of the requirements they fulfil.\cite{safecurves} Per Bernstein and Lange's definition none of
+the curves described in detail in this report can be considered safe.
 
 \subsection{In this report ---}
 
 Elliptic curves provide a new mathematical model that can be used as the basis for cryptography. Several
-implementations of ECC already exist ... \textbf{Note: BouncyCastle and SAGENB}
+implementations of ECC already exist: Bouncy Castle is a free Java and C\# implementation of various cryptosystems,
+including some based on elliptic curves.\cite{bouncycastle}
 
 In 1995, ElGamal described a simple (as in simply brilliant) public key cryptosystem that can be adapted
 to use elliptic curves (Section \ref{sec:math_encryption_elgamal}). This system relies on the ability to
@@ -80,6 +84,10 @@ the encryption of a string is broken down and the distribution of time spent in 
 is discussed (Section \ref{sec:performance_components}); and finally, OpenECC is compared to Bouncy Castle to
 get an indication of the real-world applicability of the implementation (Section \ref{sec:performance_bouncycastle}).
 
-\textbf{Note: Reference the disclaimer in appendix \ref{app:disclaimer}}
+OpenECC is by no means a complete library that should be used in production. It should not be used to encrypt real,
+sensitive data (see Appendix \ref{app:disclaimer}).
 
-\textbf{Note: The code can be found at...}
+The code for OpenECC can be found at \texttt{https://github.com/hypesystem/OpenECC}, and it is recommended to look
+through it while to see concrete implementations of the algorithms and calculations described in Section
+\ref{sec:math} and to see how the architecture described in Section \ref{sec:implementation} dictates the design
+of the library.
