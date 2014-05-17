@@ -1,3 +1,12 @@
 \subsection{BouncyCastle Comparison}
 \label{sec:performance_bouncycastle}
-\textbf{Note: Measure against bouncycastle encryption with the same curve. Create beautiful (but devastating) graph!}
+
+\textbf{BouncyCastle: no ECElGamal in C\# port. Comparing with Java instead. This may show more of a difference in VMs than actual
+implementations. BC does not have an encoding/decoding algorithm, so it is not tested on the same message.}
+
+\begin{figure}[htb!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{performance/bouncycastle-comparison}
+	\caption{Hello, World}
+	\label{fig:bouncycastle-comparison-graph}
+\end{figure}

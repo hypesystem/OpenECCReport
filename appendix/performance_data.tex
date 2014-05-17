@@ -106,3 +106,20 @@ Data aggregated for figures (all in \# inclusive samples):
 
 \section{Bouncy Castle Performance Comparison Data}
 \label{app:bc-performance-data}
+
+Runtime (ms) compared between BouncyCastle Java and C\# and OpenECC.
+
+\begin{figure}[h!]
+\begin{tabular}{|l|r|r|r|}
+	\hline
+	& \multicolumn{1}{|l|}{\textbf{BouncyCastle Java}} &
+	  \multicolumn{1}{|l|}{\textbf{BouncyCastle C\#}} &
+	  \multicolumn{1}{|l|}{\textbf{OpenECC}} \\
+	\hline
+	\textbf{Setup} & 1 & 1 & 1 \\
+	\textbf{KeyGen} & 10 & 161 & 168 \\
+	\textbf{Encrypt} & 14 && 250 \\
+	\textbf{Decrypt} & 8 && 121 \\
+	\hline
+\end{tabular}
+\end{figure}
