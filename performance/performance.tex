@@ -1,15 +1,15 @@
 \section{Performance}
 \label{sec:performance}
-
- \textbf{Note: Answer the introduction's claims? Talk about why performance is measured, what the goal is with measuring the
- performance.}
  
- Several algorithms for scalar point multiplication were implemented. To determine which of these is the most efficient,
- and should used per default, they must be compared.
+Several algorithms for scalar point multiplication were implemented. To determine which of these is the most efficient,
+and should used per default, they must be compared.
  
- The performance of OpenECC, in its whole, can be judged by an analysis of each of the
- individual underlying components. This analysis will help to figure out where performance bottlenecks (if
- any) exist, and what constructs (curves, multipliers, encoders or encryptors) should be improved.
+The performance of OpenECC, in its whole, can be judged by an analysis of each of the
+individual underlying components. This analysis will help to figure out where performance bottlenecks (if
+any) exist, and what constructs (curves, multipliers, encoders or encryptors) should be improved.
+ 
+Bouncy Castle is an existing implementation of (among others) the features offered by OpenECC. Comparing the performance
+between the two gives an idea of the real-world applicability of the algorithms and implementations described.
 
 \input{performance/multipliers}
 \input{performance/component}
