@@ -45,7 +45,9 @@ defined as such: ``given an elliptic curve \(E\) defined over a finite field \(\
 Section \ref{sec:math_encryption}) is exactly that of the ECDLP, with the public key \(Q\) and private
 key \(l\).}\cite{hankerson2010}
 
-\textbf{Note from Lorena: Define \(\langle P \rangle\) and "order \(n\)".}
+The order \(n\) of \(P\) is a number such that \(nP = O_{\infty}\) (the point at infinity), and is used to describe
+the cyclic subgroup \(\langle G \rangle = \{ O_\infty, P, 2P, ..., (n-1)P \} \). For a generator, this cyclic subgroup
+will contain all of the points on the curve.
 
 \textbf{Note: Add something about patent problems (not many free implementations exist!) - which free
 implementations do exist? (SAGE in python is one possible, Bouncy Castle in Java and C\# another.)}

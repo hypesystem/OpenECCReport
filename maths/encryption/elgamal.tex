@@ -33,10 +33,6 @@ logarithm cryptographic schemes.''\cite{hankerson2010}} The sender \(A\) and rec
 (over a finite field \(\mathbb{F}_p\)) and a generator point \(G\). The prime order \(n\) of \(G\) must also be
 known.
 
-The order \(n\) of \(G\) is a number such that \(nG = O_{\infty}\) (the point at infinity), and is used to describe
-the cyclic subgroup \(\langle G \rangle = \{ \infty, G, 2G, ..., (n-1)G \} \). For a generator, this cyclic subgroup
-will contain all of the points on the curve.
-
 The recipient then computes a public key \(Q_B = d_B G\) (a point) from a randomly selected secret key
 \(d_B \in_R [1,n-1]\) (an integer), and distributes the public key to the sender. \(A\) can now encrypt
 a plaintext \(m\), encoded as a point \(M\) on the curve, in such a way that only \(B\) can decrypt
