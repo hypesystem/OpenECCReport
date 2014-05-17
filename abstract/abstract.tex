@@ -4,12 +4,13 @@ Elliptic curves can be used as the foundation of cryptosystems. Elliptic Curve C
 from several layers: curves and points, scalar multiplication algorithms, encoding and decoding algorithms,
 and encryption and decryption algorithms.
 
-The mathematical foundations and algorithms for some possible implementations of each layer are investigated
-and reported.
+The mathematical foundations and algorithms for some possible implementations of each layer (including NAF
+and wNAF multiplication algorithms and elliptic curve ElGamal encryption) are investigated and reported.
 
 Each possibility is implemented in a C\# (.NET) library, \emph{OpenECC}, and the structure and design decisions
-for this library are discussed.
+for this library are discussed. OpenECC provides a modular architecture and a natural syntax.
 
-The performance of the implementation is measured and discussed.
+The performance of the implementation is measured and discussed, and is found to be similar to that of existing
+ECC implementations.
 
 \end{abstract}

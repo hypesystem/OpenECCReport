@@ -20,10 +20,8 @@ form -- is used in cryptography (see Section \ref{sec:math_curve}):
 	E: y^2 = x^3 + ax + b
 \end{equation}
 
-When using elliptic curves for cryptography, the curves are defined over a prime field \(\mathbb{F}_p\)
-of integers.
-
-\textbf{Note from Lorena: Define p}
+When using elliptic curves for cryptography, a large prime \(p\) is selected, and the curves are defined
+over a prime field \(\mathbb{F}_p\) of integers.
 
 \begin{figure}[htb]
 	\centering
@@ -34,8 +32,12 @@ of integers.
 	\label{fig:graphs}
 \end{figure}
 
-\textbf{Note: Write about the point at infinity. Define \(E(\mathbb{F}_{17})\) as \(\{\infty, x,y,z\}\) (mention
-the fact that all curves have such a point. Maybe discuss its properties. But most importantly -- why does it exist?)}
+Each curve, in addition to all the regular points, contains a point at infinity, \(O_\infty\). For example, a
+curve \(E: y^2 = x^3 + 7\) over a prime field \(\mathbb{F}_{17}\) can be written as:
+
+\begin{equation}
+	E(\mathbb{F}_{17}) = \{ O_\infty; (1,5); (1,12); ...; (15,13) \}
+\end{equation}
 
 ECC relies on the hardness of the elliptic curve discrete logarithm problem (ECDLP) to be secure. ECDLP is
 defined as such: ``given an elliptic curve \(E\) defined over a finite field \(\mathbb{F}_q\), a point
@@ -49,45 +51,34 @@ The order \(n\) of \(P\) is a number such that \(nP = O_{\infty}\) (the point at
 the cyclic subgroup \(\langle G \rangle = \{ O_\infty, P, 2P, ..., (n-1)P \} \). For a generator, this cyclic subgroup
 will contain all of the points on the curve.
 
-\textbf{Note: Add something about patent problems (not many free implementations exist!) - which free
-implementations do exist? (SAGE in python is one possible, Bouncy Castle in Java and C\# another.)}
 
-\textbf{Note: Add paragraph on different types of curves (Weierstrass, Montgomery, Edwards).}
+\textbf{Note: Something about SafeCurves...}
 
-Elliptic curves provide a new mathematical model that can be used as the basis for cryptography,
-as they allow for the creation of one-way "trapdoor" functions to be constructed.
+\subsection{In this report ---}
+
+Elliptic curves provide a new mathematical model that can be used as the basis for cryptography. Several
+implementations of ECC already exist ... \textbf{Note: BouncyCastle and SAGENB}
 
 In 1995, ElGamal described a simple (as in simply brilliant) public key cryptosystem that can be adapted
 to use elliptic curves (Section \ref{sec:math_encryption_elgamal}). This system relies on the ability to
 encode messages as points on an elliptic curve (Section \ref{sec:math_encoding}).
 
-This paper describes the structure of \emph{OpenECC}, an open-source implementation of the functionality
-described in the mathematical foundation section. \emph{OpenECC} has been developed concurrently with the
-production of the paper, \textbf{(revise:) and is used as a basis for performance measurements, comparing the different constructs
-with each other, measuring which are the most efficient (Section \ref{sec:performance}).}
-
 The implementation is modular, allowing for different curves and encryption schemes to be swapped in and out
 rapidly (Section \ref{sec:implementation}). As such, the library can be extended in the future to support different
-curves, encodings, and encryption schemes. It also provides a readable syntax that makes it more easily
-understandable than available alternatives, such as Bouncy Castle (Section \ref{sec:implementation_curves}).
+curves, encodings, and encryption schemes. It also provides a readable syntax that is closer to natural mathematical
+syntax than available alternatives, such as Bouncy Castle (Section \ref{sec:implementation_curves}).
 
 While \emph{OpenECC} implements the constructs used specifically in elliptic curve cryptography it relies one external construct.
-The elliptic curves rely on Bouncy Castle library's implementation of finite fields, which limits comparisons to the elliptic curve
-layer (such comparisons are performed in Section \ref{sec:performance_bouncycastle}).
+The elliptic curves rely on Bouncy Castle library's implementation of finite fields.
 
-\textbf{Note: Add source to paragraph below! (NSA has something...)}
+This report describes the structure of \emph{OpenECC}, an open-source implementation of the functionality
+described in the mathematical foundation section. \emph{OpenECC} has been developed concurrently with the
+production of the report, and is used as a basis for performance measurements.
 
-Comparisons of the security provided per key-length for different cryptographic algorithms exist.\footnote{Source?!} With
-most mathematical operations - including those used in ECC - several performance optimizations exist over the naïve
-implementation. The performance of traditional public-key cryptography implementations has been continuously improved
-since its inception. To understand whether ECC is feasible as an alternative to traditional cryptography, the performance
-of ECC must be evaluated in relation to that of traditional public-key cryptography implementations.
-
-\textbf{Note: Something about SafeCurves here!}
-
-\textbf{Note: There should be hints at the findings of the report here! (Performance...)}
-
-\textbf{Note: Focus on the potential for improvement...}
+Several multiplication algorithms are compared with each other (Section \ref{sec:performance_multipliers});
+the encryption of a string is broken down and the distribution of time spent in different parts of the program
+is discussed (Section \ref{sec:performance_components}); and finally, OpenECC is compared to Bouncy Castle to
+get an indication of the real-world applicability of the implementation (Section \ref{sec:performance_bouncycastle}).
 
 \textbf{Note: Reference the disclaimer in appendix \ref{app:disclaimer}}
 
