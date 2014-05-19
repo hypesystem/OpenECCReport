@@ -3,7 +3,7 @@
 
 There are more efficient representations of elliptic curves than the simple
 Weierstrass form. Both Edwards or Montgomery curves are more recent than the simple Weierstrass forms,
-and have shown to have some desirable properties.\cite{safecurves}
+and have shown to have some desirable properties, like constant-time single-scalar point multiplication.\cite{safecurves}
 
 Neither Montgomery nor Edwards curves are supported in OpenECC, but they can be converted to the
 usable Weierstrass form. Montgomery curves have the following formula:
@@ -14,7 +14,7 @@ usable Weierstrass form. Montgomery curves have the following formula:
 
 Whereas it is possible to represent all curves in Weierstrass simple forms, the same cannot be said for
 the Montgomery form (or the Edwards form for that matter). It is, however, possible to
-transform any Montgomery curves to the Weierstrass form.\cite{safecurves}
+transform any Montgomery curve to the Weierstrass form.\cite{safecurves}
 
 This does not come without a cost as the Weierstrass form of a Montgomery curve will have
 very large integers as its parameters, compared to those in the original Montgomery form. For example,
