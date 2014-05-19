@@ -1,5 +1,30 @@
 \subsection{Curves and Point Arithmetic}
 \label{sec:math_curve}
 
+As point multiplication is the action that takes the most time to perform,\cite{safecurves} several algorithms exist to
+speed this up. Some of these will be discussed here (Section \ref{sec:math_curve_multiplication}). While only Weierstrass
+curves are discussed in detail, the differences between Weierstrass curves and curves of other forms are touched upon briefly
+(Section \ref{sec:math_curve_curves}).
+
+Conceptually, the addition of two points, \(P + Q = R\), is done by drawing a line through the points, \(P\) and \(Q\),
+and finding the point \(-R\), where the line intersects the curve again. This point is
+then reflected over the x-axis to find \(R\), the result.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics{maths/addition}
+	\includegraphics{maths/doubling}
+	\caption{Conceptual addition (left) and doubling (right) of points on elliptic curves.}
+\end{figure}
+
+There are a few cases that are not explained by this conceptual model: if a point is added to its reflection, \(P + (-P)\),
+the line drawn through the two points will not intersect the curve at any other point. The result of such an addition is
+the point at infinity, \(O_\infty\). An addition where one point is the point at infinity will be the point that is not
+infinity: \(P + O_\infty = P\).
+
+The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
+\(-R\) is once again found at the line's (in this case the tangent's) next intersection
+with the curve, and the result \(R\), is found by reflecting \(-R\).\cite{hankerson2010}
+
 \input{maths/curve/weierstrass}
 \input{maths/curve/montgomery}

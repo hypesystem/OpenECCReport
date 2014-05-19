@@ -2,30 +2,11 @@
 \label{sec:math}
 \label{sec:maths}
 
-There are several distinct mathematical constructs required for building a working encryption scheme using Elliptic
-Curve Cryptography. Elliptic curve arithmetic is a subset of finite field arithmetic, but as the latter is outside
+There are several distinct mathematical constructs required for building a working cryptosystem using elliptic
+curves, ranging from the basic concepts of points and curves to the more abstract concepts of encodings and
+encryptions. Elliptic curve arithmetic is a subset of finite field arithmetic, but as the latter is outside
 of the scope of this project, an external source was used (see Section \ref{sec:implementation__dependencies}) and
 the mathematics underlying finite fields will not be discussed here.
-
-Conceptually, the addition of two points, \(P + Q = R\), is done by drawing a line through the points, \(P\) and \(Q\),
-and finding the point \(-R\), where the line intersects the curve again. This point is
-then reflected over the x-axis to find \(R\), the result.
-
-There are a few cases that are not explained by this conceptual model: if a point is added to its reflection, \(P + (-P)\),
-the line drawn through the two points will not intersect the curve at any other point. The result of such an addition is
-the point at infinity, \(O_\infty\). An addition where one point is the point at infinity will be the point that is not
-infinity: \(P + O_\infty = P\).
-
-The double of \(P\), \(2P\) or \(P+P\), is found by drawing the tangent of the curve at \(P\).
-\(-R\) is once again found at the line's (in this case the tangent's) next intersection
-with the curve, and the result \(R\), is found by reflecting \(-R\).\cite{hankerson2010}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics{maths/addition}
-	\includegraphics{maths/doubling}
-	\caption{Conceptual addition (left) and doubling (right) of points on elliptic curves.}
-\end{figure}
 
 In the following, the mathematical constructs required for encryption are shown: arithmetic with points on the simplest
 form of curves (the Weierstrass simple form, Section \ref{sec:math_curve}), probabilistic encoding of a string message
