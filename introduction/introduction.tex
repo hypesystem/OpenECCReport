@@ -1,9 +1,8 @@
 \section{Introduction}
 
-The most efficient cryptographic protocols are symmetric, in that they use a single shared key.
+The most efficient cryptographic protocols are symmetric, meaning that they use a single shared key.
 To securely exchange a shared key, public key cryptography is used. Public key cryptography
-relies on a public key for encryption and a private key for decryption, as first described by
-Diffie and Hellmann.
+relies on a public key for encryption and a private key for decryption.
 
 Elliptic Curve Cryptography (ECC) is based on the properties of elliptic curves.
 An elliptic curve is a curve \(E\) that is symmetric around the x-axis (see Figure \ref{fig:graphs}),
@@ -39,29 +38,37 @@ curve \(E: y^2 = x^3 + 7\) over a prime field \(\mathbb{F}_{17}\) can be written
 	E(\mathbb{F}_{17}) = \{ O_\infty; (1,5); (1,12); ...; (15,13) \}
 \end{equation}
 
-ECC relies on the hardness of the elliptic curve discrete logarithm problem (ECDLP) to be secure. ECDLP is
-defined as such: ``given an elliptic curve \(E\) defined over a finite field \(\mathbb{F}_q\), a point
+ECC relies on the hardness of the Elliptic Curve Discrete Logarithm Problem (ECDLP) to be secure. ECDLP is
+defined as follows: ``given an elliptic curve \(E\) defined over a finite field \(\mathbb{F}_q\), a point
 \(P \in E(\mathbb{F}_q)\) of order \(n\), and a point \(Q \in \langle P \rangle\), find the integer
 \(l \in [0,n-1]\) such that \(Q = lP\). The integer \(l\) is called the \emph{discrete logarithm of
 \(Q\) to the base \(P\)}, denoted \(l = log_P Q\).''\footnote{The hardness of the adapted ElGamal (see
 Section \ref{sec:math_encryption}) is exactly that of the ECDLP, with the public key \(Q\) and private
 key \(l\).}\cite{hankerson2010}
 
-The order \(n\) of \(P\) is a number such that \(nP = O_{\infty}\) (the point at infinity), and is used to describe
-the cyclic subgroup \(\langle G \rangle = \{ O_\infty, P, 2P, ..., (n-1)P \} \). For a generator, this cyclic subgroup
+The order \(n\) of \(P\) is the smallest possible number such that \(nP = O_{\infty}\) (the point at infinity), and is used to describe
+the cyclic subgroup \(\langle P \rangle = \{ O_\infty, P, 2P, ..., (n-1)P \} \). For a generator, this cyclic subgroup
 will contain all of the points on the curve.
 
 There are several other concerns than the ECDLP to be considered when evaluating the safety of using a curve. Bernstein and Lange
 provide an extensive list of requirements for the safety of curves, including indistinguishability from uniform random
 strings, and ``simple, fast, constant-time, single-coordinate single-scalar multiplication''. They also list a variety
-of curves, noting which of the requirements they fulfil.\cite{safecurves} Per Bernstein and Lange's definition none of
-the curves described in detail in this report can be considered safe.
+of curves, noting which of the requirements they fulfil.\cite{safecurves}
 
-\subsection{In this report ---}
+\subsection{In this report}
 
 Elliptic curves provide a new mathematical model that can be used as the basis for cryptography. Several
 implementations of ECC already exist: Bouncy Castle is a free Java and C\# implementation of various cryptosystems,
 including some based on elliptic curves.\cite{bouncycastle}
+
+This report explores the mathematical foundations and algorithms of ECC, from curves to encryption; and
+describes the structure of \emph{OpenECC}, an open-source implementation of the mathematics and algorithms.
+OpenECC has been developed concurrently with the production of the report, and is used as a basis for performance
+measurements.
+
+Arithmetic using elliptic curves of the simplest (Weierstrass) form is explained (Section \ref{sec:math_curve}) and
+several algorithms for scalar point multiplication are discussed (including NAF and wNAF, Section
+\ref{sec:math_curve_multiplication}).
 
 In 1995, ElGamal described a simple (as in simply brilliant) public key cryptosystem that can be adapted
 to use elliptic curves (Section \ref{sec:math_encryption_elgamal}). This system relies on the ability to
@@ -72,12 +79,8 @@ rapidly (Section \ref{sec:implementation}). As such, the library can be extended
 curves, encodings, and encryption schemes. It also provides a readable syntax that is closer to natural mathematical
 syntax than available alternatives, such as Bouncy Castle (Section \ref{sec:implementation_curves}).
 
-While \emph{OpenECC} implements the constructs used specifically in elliptic curve cryptography it relies one external construct.
-The elliptic curves rely on Bouncy Castle library's implementation of finite fields.
-
-This report describes the structure of \emph{OpenECC}, an open-source implementation of the functionality
-described in the mathematical foundation section. \emph{OpenECC} has been developed concurrently with the
-production of the report, and is used as a basis for performance measurements.
+While OpenECC implements the constructs used specifically in elliptic curve cryptography, the elliptic curves rely on
+Bouncy Castle library's implementation of finite fields (Section \ref{sec:implementation_dependency}).
 
 Several multiplication algorithms are compared with each other (Section \ref{sec:performance_multipliers});
 the encryption of a string is broken down and the distribution of time spent in different parts of the program
