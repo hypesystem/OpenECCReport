@@ -13,3 +13,14 @@ project statement was:
 
 	Comparisons of the security provided per key-length for different cryptographic algorithms exist. With most mathematical operations - including those used in Elliptic Curve Cryptography (ECC) - several performance optimizations exist over the naïve implementation. The performance of traditional public-key cryptography implementations has been continuously improved since its inception. To understand whether ECC is feasible as an alternative to traditional cryptography, the performance of ECC must be evaluated in relation to that of traditional public-key cryptography implementations.
 \end{quote}
+
+While all the premises for the project still hold true, some ideas surrounding the comparisons changed:
+
+\begin{itemize}
+	\item The comparison of key-length per security would require an notion of the ``security'' for cryptographic protocols.
+		This was deemed out of scope.
+	\item The performance of non-EC cryptosystems was not measured, as ECC implementations already exist, and are used. It was
+		more relevant to compare OpenECC to these implementations (more specifically, Bouncy Castle).
+	\item A few additional comparisons were added: relative performance of multiplication algorithms; and an analysis of which
+		parts of the system uses the most processing time.
+\end{itemize}
