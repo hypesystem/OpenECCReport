@@ -1,13 +1,13 @@
 \section{OpenECC Disclaimer}
 \label{app:disclaimer}
 
-Disclaimer: OpenECC should not be used in real-world applications. It exists, in its current form, as
-an instructive example, nothing more.
+OpenECC was built as part of a bachelors project to showcase a possible architecture of an ECC library and
+show implementations of the constructs used in ECC. The library is not, in its current form, fit for use in
+production. Real-world applicability was not a goal of the project, and as such certain concerns were left out:
 
-Security against timing attacks is not within the scope of what is produced here. The implementation
-does not claim to be safe, in any other sense than that it computes the correct math, and produces
-the correct encryptions and decryptions. It should not be used in real software.
-
-Note: Hankerson 219-?? regards Timings.
-
-Note: Consider writing more about implementation issues. Hankerson 205-?
+\begin{itemize}
+    \item None of the curves supported in OpenECC live up to Bernstein and Lange's requirements for safe curves
+        (\texttt{http://safecurves.cr.yp.to}).
+    \item Timing attacks have not been considered and it is very possible that the implementation unwittingly
+        leaks information about the computations performed.
+\end{itemize}
