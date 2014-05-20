@@ -66,6 +66,11 @@ describes the structure of \emph{OpenECC}, an open-source implementation of the 
 OpenECC has been developed concurrently with the production of the report, and is used as a basis for performance
 measurements.
 
+OpenECC is implemented in C\# (in the .NET framework). Whereas Bouncy Castle's Java implementation supports many
+ECC cryptosystems and constructs, the C\# implementation is more lacking. Bouncy Castle attempts to cover the
+full range of cryptographic functionality. OpenECC will try to \emph{do one thing well}, limiting itself to elliptic
+curves.
+
 Arithmetic using elliptic curves of the simplest (Weierstrass) form is explained (Section \ref{sec:math_curve}) and
 several algorithms for scalar point multiplication are discussed (including NAF and wNAF, Section
 \ref{sec:math_curve_multiplication}).
