@@ -5,6 +5,8 @@ Some elliptic curve based cryptosystems (such as the adapted ElGamal in Section 
 this useful an original string message must be encoded as a point. The encoding must be reversible and have a one-to-one relationship between encoded and raw
 messages.
 
+It should be noted that Bouncy Castle does not, at the time of writing, contain any implementations of encoding algorithms.
+
 It is trivial to map a message string to the correct numberspace as both strings and numbers have binary representations. The number is then
 simply found by converting a string to its binary representation and interpreting this as an integer. Using the ASCII character set the string
 \verb+"A"+ is mapped to the number \verb+65+.
@@ -12,7 +14,12 @@ simply found by converting a string to its binary representation and interpretin
 \begin{verbatim}
     string_to_binary "A" -> 1000001
     binary_to_integer 1000001 ->  65
+    
+    string_to_integer m = binary_to_integer (string_to_binary m)
+    string_to_integer "A" -> 65
 \end{verbatim}
+
+Indeed, any string \(m\) may be transformed to an integer \(M\) using this method.
 
 Koblitz is attributed with an algorithm that maps a message \(m\), represented as an integer in \(\mathbb{Z}_p\), to a point on the curve of the
 simple Weierstrass form \(y^2 = x^3 + ax + b \text{ mod } p\).\cite{MappingAMessage}
@@ -29,7 +36,7 @@ can be mapped to a point \(M\) on the curve:
 If no square root exists for \(z_j\) for all \(j \in \{0,1,...,K-1\}\), then it is not possible to map the message to a point. In other
 words, the method is probablistic and it is possible that a message cannot be encoded.
 
-To find the original message from a point again, a simple calculcation is performed:
+The original message can be found from the point by performing a simple calculation:
 
 \begin{equation}
 	m = {\lfloor {x \over K} \rfloor}
@@ -38,7 +45,7 @@ To find the original message from a point again, a simple calculcation is perfor
 The flooring of \(x \over K\) ensures that any \(j\) added to \(MK\) has no effect.\cite{MappingAMessage}
 
 As the numberspace the messages must be mapped to is limited by the size of the prime field \(\mathbb{F}_p\) over which the curve is defined, so is the
-length of the message. The numeric value of a string can be no greater than \(p\).
+length of the message. The numeric value \(M\) of a string can be no greater than \(p\).
 
 \paragraph{Picking the value K}
 
@@ -61,8 +68,8 @@ Multiplication is a heavy operation, and picking a smaller value of \(K\) limits
 smaller numbers), and the number of multiplications (as the range of \(j\)s used is limited by \(K - 1\)). So while it is easy to find the greatest
 possible value \(K_{greatest} = {\lfloor { p \over {M + 1} }\rfloor}\) yielding the highest probability of success, this is not necessarily desirable.
 
-For example, the curve \emph{secp256k1} has a prime that can be approximated as \(p_{secp256k1} \simeq 1.16*10^{77}\).\cite{safecurves} An M can be
-found from a message of a reasonably short length: \(M = \mathtt{string\_to\_integer(``Hello, World.'')} \simeq 3.68*10^{30}\). This would lead to
+For example, the curve \verb+secp256k1+ has a prime that can be approximated as \(p_{secp256k1} \simeq 1.16*10^{77}\).\cite{safecurves} An M can be
+found from a message of a reasonably short length: \(M = \mathtt{string\_to\_integer(``Hello, World.")} \simeq 3.68*10^{30}\). This would lead to
 \(K_{greatest} \simeq {\lfloor { {1.16*10^{77}} \over {3.68*10^{30} + 1}} \rfloor} = 3.15*10^{46}\), which would lead to a huge amount of multiplications.
 
 Picking \(K = 7\) gives a probability of success \(P_{success} \geq 0.993\), leaving less than a \(0.7\%\) failure rate.
