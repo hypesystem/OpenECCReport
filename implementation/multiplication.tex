@@ -3,9 +3,9 @@
 \label{sec:implementation_multiplication}
 
 While the simple arithmetic (addition, negation) of a point depends on its curve, algorithms for speeding up scalar
-multiplication of points are often independent of the type of curve. For example, the Double-and-Add, NAF, and wNAF
-algorithms can be applied to a point on any type of curve and result in exactly the same performance in computation
-time.
+multiplication of points are often independent of the type of curve. For example, the Double-and-Add algorithm can be
+applied to a point on any type of curve and -- regardless of the curve type -- result in the same performance improvement.
+The same applies for the NAF and wNAF algorithms.
 
 \begin{figure}[htb]
 	\centering

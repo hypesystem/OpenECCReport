@@ -22,7 +22,9 @@ simply found by converting a string to its binary representation and interpretin
 Indeed, any string \(m\) may be transformed to an integer \(M\) using this method.
 
 Koblitz is attributed with an algorithm that maps a message \(m\), represented as an integer in \(\mathbb{Z}_p\), to a point on the curve of the
-simple Weierstrass form \(y^2 = x^3 + ax + b \text{ mod } p\).\cite{MappingAMessage}
+simple Weierstrass form \(y^2 = x^3 + ax + b \text{ mod } p\).\footnote{While other encoding algorithms, which offer better performance and probability
+for successful encoding, do exist,\cite{MappingAMessage}\cite{InjectiveEncodings} the encoding algorithm described here offers so high probability
+and performance (see Section \ref{sec:performance_components}) that implementing any more algorithms was not a priority.}\cite{MappingAMessage}
 
 An integer K is selected such that \((M + 1)K < p\), and this is used to compute
 a candidate x-coordinate for the point, \(x_j = MK + j \text{ mod } p\). To verify the validity of the candidate, a check is performed: \(x_j\)

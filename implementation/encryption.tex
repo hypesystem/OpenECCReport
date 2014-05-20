@@ -55,8 +55,8 @@ line of the constructor of the encryptor).
 
 Whereas the adapted ElGamal scheme relies purely on elliptic curves, some cryptosystems rely on both elliptic curves and more traditional
 cryptography. Such systems are called \emph{hybrid} systems, and ECIES (Elliptic Curve Integrated Encryption Scheme) is one of them. This
-system has an elliptic curve point as public key and an integer as private key (just like the adapted ElGamal), but relies internally on
-AES/Rijndael.\cite{hankerson2010}
+system has an elliptic curve point as public key and an integer as private key (just like ECElGamal), but relies internally on symmetric-key
+encryption schemes.\cite{hankerson2010}
 
 This has the advantage of not relying on any encoding, which in turn lifts the limitation on message length. ECIES could be implemented to
 fit the current interfaces in the system.
