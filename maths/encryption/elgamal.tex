@@ -26,8 +26,8 @@ Finding the original message \(m\) is then as simple as:
 \end{equation}
 
 \paragraph{Adapting to Elliptic Curves}
-Hankerson et.al. describe a straight-forward way of adapting the ElGamal system to use with
-Elliptic Curves.\footnote{Hankerson et.al. credit Koblitz and Miller with, independently, proposing
+Hankerson et al. describe a straight-forward way of adapting the ElGamal system to use with
+Elliptic Curves (known as ECElGamal).\footnote{Hankerson et al. credit Koblitz and Miller with, independently, proposing
 ``using the group of points on an elliptic curve defined over a finite field to devise discrete
 logarithm cryptographic schemes.''\cite{hankerson2010}} The sender \(A\) and recipient \(B\) agree on a curve \(E\)
 (over a finite field \(\mathbb{F}_p\)) and a generator point \(G\). The prime order \(n\) of \(G\) must also be
@@ -52,5 +52,4 @@ The recipient can now decrypt the message by using his secret key, \(d_B\), as \
 
 The original plaintext point can now safely be decoded to the original plaintext message.\cite{hankerson2010}
 
-This concludes all the mathematics required for encrypting a message as a point on an elliptic curve, starting from
-the basics of curves, and moving all the way to the high-level encryption algorithm.
+While the Bouncy Castle Java library contains an implementation of ECElGamal, the C\# Bouncy Castle library does not.
