@@ -1,0 +1,36 @@
+\section{Future Work on OpenECC}
+
+OpenECC is currently at a stage where it can be considered mostly a proof-of-concept, showing the implementation
+of several ECC algorithms and constructs without considering \emph{real} security (against, eg. timing attacks).
+
+There are two angles from which the project can be improved. The most obvious is the number of features offered by
+the library. Currently, several layers of the project only support a single algorithm -- but several different
+possibilities exist.
+
+The second angle is more theoretical, focusing on establishing a more rigorous practice of security vetting of the
+library. Requirements must be set for the quality and safety of the implementation. This is an extensive undertaking
+that is out of scope of any in-depth discussion in this project.
+
+\subsection{Features}
+
+Following is a list of some features that have been considered for implementation or discussed peripherally during the
+project. Many more possible features exist.
+
+\begin{description}
+    \item[Finite Field Implementation] Currently OpenECC depends on Bouncy Castle's implementation of finite fields.
+        Removing this dependency should be a priority, as it would make the size of the library required to do ECC
+        much smaller.
+    \item[Binary representation of Points] While the current implementation of OpenECC works well within its own world,
+        it is not usable in a real-world context, as the points cannot be represented in a form such that they are
+        transmissible. Implementing this would make points, ciphertexts and plaintexts transferable as bit strings.
+    \item[Montgomery Curves] Montgomery curves have several advantages, most importantly the ladder allowing for constant-time
+        scalar multiplication. Edwards curves may also be considered.
+    \item[Deterministic Encoding] The current encoding algorithms has severe limits on message length. Solving this problem,
+        and at the same time making sure that any message can always be mapped to a point on the curve is important for
+        OpenECC to be usable in the real world (where longer messages or keys are transmitted).
+    \item[Signing algorithms] Signing of messages is used many places to verify authenticity. Algorithms such as the Digital
+        Siginature Algorithm (DSA) have been adapted to elliptic curves (ECDSA), and could be implemented to offer this
+        functionality.
+    \item[Hybrid encryption] For encryption of longer messages, asymmetric encryption is quicker. Hybrid encryption takes
+        advantage of this. Implementing ECIES would offer some hybrid encryption functionality.
+\end{description}
