@@ -6,14 +6,16 @@ advanced algorithms use fewer additions, which should - in theory - be quicker. 
 to take into account, such as pre-computations and other overhead.
 
 To determine which algorithm is actually the fastest for use in OpenECC, all of them are tested. The test performs a
-full  encryption of a string, involving all layers of the software. A hundred tests are run
-per algorithm, and the average time spent is recorded. The tests are run on a computer with an Intel Core i3 processor.
+full  encryption of a string, involving all layers of the software. A hundred tests are run per algorithm, and the
+average time spent is recorded (see Figure \ref{fig:multipliers-comparison}). The tests are run on a computer with an
+Intel Core i3 processor.
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=\textwidth]{performance/multipliers-comparison}
-	\caption{Comparison of differnt multiplication algorithms. wNAF with a window size of 3 is the fastest on average,
-		having run each algorithm 100 times.}
+	\caption{Comparison of different multiplication algorithms. \emph{Setup} time is time spent setting up the curve with
+        the correct parameters, as well as time spent on key generation. wNAF with a window size of 3 is the fastest on
+        average, having run each algorithm 100 times.}
 	\label{fig:multipliers-comparison}
 \end{figure}
 

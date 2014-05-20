@@ -1,4 +1,4 @@
-\subsection{BouncyCastle Comparison}
+\subsection{Bouncy Castle Comparison}
 \label{sec:performance_bouncycastle}
 
 Bouncy Castle is an extensive suite of cryptography constructs, including those required for ECC. Bouncy Castle is originally a
@@ -31,7 +31,7 @@ Castle C\#: \(224 \text{ ms}\) and \(128 \text{ ms}\), respectively. These value
 faster than OpenECC, but the decryption \(7 \text{ ms}\) slower.
 
 Bouncy Castle does not -- unlike OpenECC -- contain any encoding algorithm, which means that the testing has been slightly skewed.
-The times measured for for OpenECC contain encoding and decoding within the encryption and decryption steps. As seen in the component
+The times measured for OpenECC contain encoding and decoding within the encryption and decryption steps. As seen in the component
 analysis above, encoding accounts for \(6\%\) of the encryption time. Encryption without encoding takes \(235 \text{ms}\), leaving it
 only \(11 \text{ ms}\) slower than the projected encryption runtime for Bouncy Castle C\#.
 

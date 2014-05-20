@@ -8,9 +8,9 @@ I/O nor memory usage are important.
 To measure the processor time spent at various levels, the \emph{Visual Studio Profiler Tools} are used.\footnote{The Visual
 Studio Profiler Tools are built-in to Visual Studio, the most common IDE for C\#.} Performing a CPU Sampling with these tools
 provide a look into which methods are used, and how often, based on random samples taken while a program is running. A lot of
-samples are taken: the program described below ran in \(4.5 \text{ seconds}\) and yielded 806 samples. Looking at the number of samples
-that involve a certain function gives an approximation of how often that function is used.\footnote{The full dataset can be
-found in Appendix \ref{app:component-performance-data}.}
+samples are taken: the program described below (Figure \ref{fig:profiler-code}) ran in \(4.5 \text{ seconds}\) and yielded 806
+samples. Looking at the number of samples that involve a certain function gives an approximation of how often that function is
+used.\footnote{The full dataset can be found in Appendix \ref{app:component-performance-data}.}
 
 There are several different abstraction levels to be tested when using OpenECC encryption: on the top-most level there are concepts
 such as encryption, decryption, key generation, and curve preparation, on lower levels there are other construct. To profile the time
@@ -57,8 +57,9 @@ Encryption is by far the most time-consuming of the top-level operations (Figure
 key generation take around the same time. This is only natural, as encryption uses more iterations and more scalar multiplications.
 
 Encoding and decoding is performed inside encryption and decryption, respectively, but both of these transformations from message to
-point take a negligible amount of time. Encoding takes around \(~5\%\) of the time spent encrypting, and decoding takes around \(~0\%\)
-of the time spent decrypting.
+point take a negligible amount of time. Encoding takes around \(5\%\) of the time spent encrypting, and decoding takes around \(0\%\)
+of the time spent decrypting.\footnote{The decoding is performed in two mathematical operations (divison and floor, see Section
+\ref{sec:math_encoding}), which is, indeed, expected to be very quick. In the measurement performed, the time spent was immeasurable.}
 
 In the following is an investigation of the time spent in the application from the different abstraction levels of the architecture.
 The top-most level was discussed above, and the following will look at the Point layer, the Finite Field layer, and finally at the
@@ -81,7 +82,8 @@ total computation time is spent doing point multiplications.
 	\label{fig:point-multiplication-performance}
 \end{figure}
 
-Of the time spent in point multiplication, a vast majority is spent in addition, an almost none of the time is spent in negation. This
+Of the time spent in point multiplication, a vast majority is spent in addition (covering the addition of \emph{any two points},
+and thus covering doubling as well), and almost none of the time is spent in negation. This
 is to be expected, as multiplication consists mostly of additions in some form or other.
 
 A lot of additions are being performed. One way to lower the number of additions, and hence the time spent computing multiplications, is
@@ -95,7 +97,7 @@ An alternative would be implementing a different type of curve (such as a Montgo
 
 While on the point level most of the time is spent doing multiplications, the most time consuming finite field operation is division
 (\(89.2\%\), see Figure \ref{fig:finite-field-performance}). Point addition for Weierstrass curves performs a single division operation
-on finite field elements, which is likely the slowest operation of the addition.
+on finite field elements, which is likely the slowest operation of the point addition.
 
 \begin{figure}[htb!]
 	\centering
@@ -106,12 +108,11 @@ on finite field elements, which is likely the slowest operation of the addition.
 	\label{fig:finite-field-performance}
 \end{figure}
 
+The finite field implementation is from Bouncy Castle, and as such any speculation in improvements of the running time of finite field division
+is out of scope.
+
 \subsubsection{BigInteger Conversion}
 \label{sec:performance_components_biginteger}
-
-The conversion between BouncyCastle's and C\#'s native \texttt{BigInteger}s uses string conversion and parsing, which is expected to be slow.
-The overall computation time spent doing just this is around \(5\%\) (see Figure \ref{fig:biginteger-performance})! Without this conversion,
-the full runtime of encrypting ``Hello, World.'' would take \(466 \text{ ms}\) (\(25 \text{ ms}\) faster).
 
 \begin{figure}[htb!]
 	\centering
@@ -120,3 +121,7 @@ the full runtime of encrypting ``Hello, World.'' would take \(466 \text{ ms}\) (
 		These operations would not be required if finite field implementation using the native C\# \texttt{BigInteger}s existed.}
 	\label{fig:biginteger-performance}
 \end{figure}
+
+The conversion between BouncyCastle's and C\#'s native \texttt{BigInteger}s uses string conversion and parsing, which is expected to be slow.
+The overall computation time spent doing just this is around \(5\%\) (see Figure \ref{fig:biginteger-performance})! Without this conversion,
+the full runtime of encrypting ``Hello, World.'' would take \(466 \text{ ms}\) (\(25 \text{ ms}\) faster).

@@ -1,6 +1,11 @@
 \section{Performance}
 \label{sec:performance}
- 
+
+The performance of an encryption library is paramount. When arguing for a new (type of) cryptosystem there are few
+criteria to consider: new use cases, improved security-per-keylength, and performance. This project has focused on
+creating an alternative -- a direct parallel to -- existing cryptosystems (in terms of use cases), and the assesment
+of security is out of scope. This leaves only one angle to argue: performance.
+
 Several algorithms for scalar point multiplication were implemented. To determine which of these is the most efficient,
 and should used per default, they must be compared.
  
@@ -10,6 +15,10 @@ any) exist, and what constructs (curves, multipliers, encoders or encryptors) sh
  
 Bouncy Castle is an existing implementation of (among others) the features offered by OpenECC. Comparing the performance
 between the two gives an idea of the real-world applicability of the algorithms and implementations described.
+
+As the constructs and algorithms implemented (see Sections \ref{sec:math} and \ref{sec:implementation}) are not the most
+advanced or efficient that have been published, the performance is -- at best -- expected to be comparable with existing
+implementations.
 
 \input{performance/multipliers}
 \input{performance/component}
