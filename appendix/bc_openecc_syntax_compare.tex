@@ -1,0 +1,112 @@
+\section{Bouncy Castle Java and OpenECC syntax comparison}
+\label{app:bc_openecc_syntax_compare}
+
+Following are a few, short comparisons of key functionality regarding ECC. Notice that the Bouncy Castle code is in Java,
+whereas the OpenECC code is in C\#.
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+X9ECParameters stuff = SECNamedCurves.getByName("secp256k1");
+ECCurve curve = stuff.getCurve();
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{Bouncy Castle Java: Setup curve.}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+var curve = CurveFactory.secp256k1;
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{OpenECC: Setup curve.}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+ECKeyPairGenerator keygen = new ECKeyPairGenerator();
+ECDomainParameters domain_params =
+        new ECDomainParameters(curve, stuff.getG(), stuff.getN());
+SecureRandom rand = new SecureRandom();
+ECKeyGenerationParameters keygen_params =
+                new ECKeyGenerationParameters(domain_params,rand);
+keygen.init(keygen_params);
+AsymmetricCipherKeyPair keys = keygen.generateKeyPair();
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{Bouncy Castle Java: Key Generation.}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+var encoder = new ProbabilisticWeierstrassMessageEncoder(curve,
+                                               new BigInteger(7));
+var encryptor = new ElGamalEncryptor(curve, encoder);
+var keys = encryptor.GenerateKeyPair();
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{OpenECC: Key Generation.}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+ECElGamalEncryptor elgamal_enc = new ECElGamalEncryptor();
+ECPublicKeyParameters pub_params =
+                         (ECPublicKeyParameters)keys.getPublic();
+elgamal_enc.init(pub_params);
+ECPair ciphertext = elgamal_enc.encrypt(plaintext_as_point);
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{Bouncy Castle Java: Encrypt point (no encoding).}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+var ciphertext = encryptor.Encrypt(keys.PublicKey, plaintext);
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{OpenECC: Encrypt message (including encoding).}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+ECElGamalDecryptor elgamal_dec = new ECElGamalDecryptor();
+ECPrivateKeyParameters priv_params =
+                       (ECPrivateKeyParameters)keys.getPrivate();
+elgamal_dec.init(priv_params);
+ECPoint plaintext_as_point = elgamal_dec.decrypt(ciphertext);
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{Bouncy Castle Java: Decrypt point to message point (no decoding).}
+\end{figure}
+
+\begin{figure}[h!]
+    \begin{tabular}{|p{\textwidth}|}
+    \hline
+    \begin{verbatim}
+var plaintext = encryptor.Decrypt(keys.PrivateKey, ciphertext);
+    \end{verbatim} \\
+    \hline
+    \end{tabular}
+    \caption{OpenECC: Decrypt point to plaintext (including decoding).}
+\end{figure}
